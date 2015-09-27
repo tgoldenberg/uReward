@@ -3,7 +3,7 @@
  * https://github.com/facebook/react-native
  */
 'use strict';
-var BasicStorageExample = require('./application/components/Storage');
+var Register = require('./application/components/Register');
 var React = require('react-native');
 var {
   AppRegistry,
@@ -25,8 +25,8 @@ var uReward = React.createClass({
       <NavigatorIOS
         style={styles.navigator}
         initialRoute={{
-          component: BasicStorageExample,
-          title: 'BasicStorageExample'
+          component: Register,
+          title: 'Register'
         }}
       />
     );

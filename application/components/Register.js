@@ -1,6 +1,8 @@
 'use strict';
 
 var React = require('react-native');
+var Dashboard = require('./Dashboard');
+
 var {
   AsyncStorage,
   PickerIOS,
@@ -10,6 +12,7 @@ var {
   StyleSheet,
   View
 } = React;
+
 var styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
@@ -53,10 +56,8 @@ var styles = StyleSheet.create({
     justifyContent: 'center'
   },
 });
-var PickerItemIOS = PickerIOS.Item;
 
 var STORAGE_KEY = '@AsyncStorageExample:key';
-var COLORS = ['red', 'orange', 'yellow', 'green', 'blue'];
 
 var BasicStorageExample = React.createClass({
   componentDidMount() {
@@ -68,6 +69,11 @@ var BasicStorageExample = React.createClass({
       var value = await AsyncStorage.getItem(STORAGE_KEY);
       if (value !== null){
         this.setState({username: value, storedName: value});
+        this.props.navigator.push({
+          title: 'Dashboard',
+          component: Dashboard,
+          passProps: {username: value}
+        });
       } else {
       }
     } catch (error) {
@@ -117,6 +123,13 @@ var BasicStorageExample = React.createClass({
     } catch (error) {
     }
     this.setState({storedName: this.state.username});
+    if (this.state.username != "") {
+      this.props.navigator.push({
+        title: 'Dashboard',
+        component: Dashboard,
+        passProps: {username: this.state.username}
+      });
+    }
   }
 });
 
