@@ -3,14 +3,14 @@
  * https://github.com/facebook/react-native
  */
 'use strict';
-var Main = require('./application/components/Main');
+var BasicStorageExample = require('./application/components/Storage');
 var React = require('react-native');
 var {
   AppRegistry,
   NavigatorIOS,
   StyleSheet,
   Text,
-  View,
+  View
 } = React;
 
 var styles = StyleSheet.create({
@@ -25,8 +25,8 @@ var uReward = React.createClass({
       <NavigatorIOS
         style={styles.navigator}
         initialRoute={{
-          component: Main,
-          title: 'Main'
+          component: BasicStorageExample,
+          title: 'BasicStorageExample'
         }}
       />
     );
