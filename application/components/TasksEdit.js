@@ -1,5 +1,6 @@
 var React = require('react-native');
 var { Icon, } = require('react-native-icons');
+
 var {
   View,
   Text,

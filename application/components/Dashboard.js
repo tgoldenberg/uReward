@@ -224,7 +224,7 @@ var Dashboard = React.createClass({
   },
   render: function() {
     var content;
-    if (!this.state.edit) {
+    if (this.state.edit) {
       content = <TasksEdit
                   rewards={MY_REWARDS}
                   username={this.props.username}
