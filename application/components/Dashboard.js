@@ -34,6 +34,26 @@ MY_REWARDS = [
   {
     name: "Call mom & dad 1x a month",
     stars: 2
+  },
+  {
+    name: "Go see Knicks game",
+    stars: 5
+  },
+  {
+    name: "Call my brother",
+    stars: 2
+  },
+  {
+    name: "Get a job at Brainscape",
+    stars: 10
+  },
+  {
+    name: "Get into an Ivy League executive MBA program",
+    stars: 50
+  },
+  {
+    name: "Get great recommendations from direct supervisors",
+    stars: 20
   }
 ]
 
@@ -91,28 +111,33 @@ var styles = StyleSheet.create({
     justifyContent: 'center'
   },
   reward: {
-    fontSize: 20,
+    fontSize: 18,
     textAlign: 'left',
     color: 'black',
-    flex: 3
+    flex: 3,
+    padding: 5
   },
   rewardStars: {
-    fontSize: 18,
+    fontSize: 12,
+    marginTop: 10,
     color: 'black',
-    flex: 1
+    flex: 1.2
   },
   rewardContainer: {
     flex: 1,
     flexDirection: 'row',
     padding: 10,
     borderColor: 'black',
-    marginTop: 0
+    marginTop: 4,
+    borderRadius: 3,
+    backgroundColor: "#e6e6e6"
+
   },
   scrollView: {
     backgroundColor: '#6A85B1',
     height: 500,
-    paddingLeft: 20,
-    paddingRight: 20,
+    paddingLeft: 5,
+    paddingRight: 5,
     marginTop: 0,
     paddingTop: 0
   },
@@ -129,6 +154,24 @@ var styles = StyleSheet.create({
     margin: 10,
     backgroundColor: '#6A85B1',
     borderRadius: 3
+  },
+  calendarSigns: {
+    width: 50,
+    height: 50,
+    flex: 1,
+    marginTop: 7
+  },
+  rewardIcons: {
+    width: 40,
+    height: 40,
+    flex: 1,
+    fontSize: 10
+  },
+  smallRewardIcons: {
+    flex: .7,
+    width: 30,
+    height: 30,
+    marginTop: 6
   }
 });
 
@@ -140,9 +183,33 @@ var Dashboard = React.createClass({
       if (text.length == 23) {
         text += "...";
       }
-      return <View style={styles.rewardContainer} key={idx}>
+      return  <View style={styles.rewardContainer} key={idx}>
+                <Icon
+                  name='fontawesome|star-o'
+                  size={30}
+                  style={styles.smallRewardIcons}
+                  color='#6A85B1'
+                  ></Icon>
+                <Icon
+                  name='fontawesome|minus-square'
+                  size={30}
+                  style={styles.smallRewardIcons}
+                  color='#6A85B1'
+                  />
+                <Icon
+                  name='fontawesome|plus-square'
+                  size={30}
+                  style={styles.smallRewardIcons}
+                  color='#6A85B1'
+                  />
                 <Text style={styles.reward}>{text}</Text>
                 <Text style={styles.rewardStars}>({reward.stars} stars)</Text>
+                <Icon
+                  name='fontawesome|check-square-o'
+                  size={30}
+                  style={styles.rewardIcons}
+                  color='#6A85B1'
+                  />
               </View>;
     });
     return (
@@ -160,7 +227,7 @@ var Dashboard = React.createClass({
           </Text>
         </View>
         <View style={{backgroundColor: '#b4b4b4', flex: 0.5}} >
-          <Text style={{flex: 2, padding: 15, fontSize: 18 }}>
+          <Text style={{flex: 2, padding: 15, fontSize: 18, backgroundColor: '#a7a7a7' }}>
             Stars This Week: 10
           </Text>
           <Text style={{flex: 1, padding: 15, fontSize: 18 }}>
@@ -169,10 +236,22 @@ var Dashboard = React.createClass({
         </View>
       </View>
       <View style={{flexDirection: 'row', height: 70}}>
-        <View style={{backgroundColor: '#f7f7f7', flex: 1}} >
-          <Text style={{fontSize: 20, marginLeft: 10, marginTop: 20, textAlign: 'center'}}>
+        <View style={{backgroundColor: '#f7f7f7', flex: 1, flexDirection: 'row'}} >
+          <Icon
+            name='fontawesome|angle-left'
+            size={40}
+            style={styles.calendarSigns}
+            color='black'
+            />
+          <Text style={{fontSize: 20, marginTop: 20, textAlign: 'center', flex: 8}}>
              Today, Saturday, October 11, 2015
           </Text>
+          <Icon
+            name='fontawesome|angle-right'
+            size={40}
+            style={styles.calendarSigns}
+            color='black'
+            />
         </View>
       </View>
       <ScrollView
