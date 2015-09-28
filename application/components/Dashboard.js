@@ -153,7 +153,7 @@ var styles = StyleSheet.create({
     height: 80,
     margin: 10,
     backgroundColor: '#6A85B1',
-    borderRadius: 3
+    borderRadius: 2
   },
   calendarSigns: {
     width: 50,
@@ -172,6 +172,38 @@ var styles = StyleSheet.create({
     width: 30,
     height: 30,
     marginTop: 6
+  },
+  star: {
+    width: 40,
+    height: 40,
+    backgroundColor: 'transparent'
+  },
+  starContainer: {
+    flex: 1,
+    flexDirection: 'row'
+  },
+  starText: {
+    position: 'absolute',
+    left: 10,
+    top: 12,
+    width: 20,
+    textAlign: 'center'
+  },
+  editTaskContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 10,
+    borderColor: 'black',
+    marginTop: 4,
+    borderRadius: 3,
+    backgroundColor: "white"
+  },
+  editTaskText: {
+    fontSize: 20,
+    color: 'black',
+    padding: 10
   }
 });
 
@@ -184,12 +216,15 @@ var Dashboard = React.createClass({
         text += "...";
       }
       return  <View style={styles.rewardContainer} key={idx}>
-                <Icon
-                  name='fontawesome|star-o'
-                  size={30}
-                  style={styles.smallRewardIcons}
-                  color='#6A85B1'
-                  ></Icon>
+                <View style={styles.starContainer}>
+                  <Text style={styles.starText}>{8}</Text>
+                  <Icon
+                    name='fontawesome|star-o'
+                    size={40}
+                    style={styles.star}
+                    color='#6A85B1'
+                    ></Icon>
+                </View>
                 <Icon
                   name='fontawesome|minus-square'
                   size={30}
@@ -221,7 +256,9 @@ var Dashboard = React.createClass({
             size={40}
             style={styles.facebook}
             color='black'
-            />
+            >
+          </Icon>
+
         <Text style={{fontSize: 20, marginLeft: 10, marginTop: 20, flex: 2}}>
             {this.props.username}
           </Text>
@@ -260,6 +297,11 @@ var Dashboard = React.createClass({
         automaticallyAdjustContentInsets={false}
         >
         {rewards}
+        <View style={styles.editTaskContainer}>
+          <Text style={styles.editTaskText}>
+            Edit Tasks
+          </Text>
+        </View>
       </ScrollView>
     </View>
     )
