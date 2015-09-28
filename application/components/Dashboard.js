@@ -1,5 +1,8 @@
 var React = require('react-native');
 var { Icon, } = require('react-native-icons');
+var TasksList = require('./TasksList');
+var TasksEdit = require('./TasksEdit');
+
 var {
   View,
   Text,
@@ -204,106 +207,40 @@ var styles = StyleSheet.create({
     fontSize: 20,
     color: 'black',
     padding: 10
+  },
+  editButton: {
+    alignSelf: 'stretch',
+    justifyContent: 'center'
   }
 });
 
 var Dashboard = React.createClass({
+  getInitialState: function() {
+    return {edit: false};
+  },
+  toggleEdit: function() {
+    this.setState({edit: !this.state.edit});
+    console.log("EDIT", this.state.edit);
+  },
   render: function() {
-    var rewards = MY_REWARDS.map(function(reward, idx){
-
-      var text = reward.name.substring(0,23);
-      if (text.length == 23) {
-        text += "...";
-      }
-      return  <View style={styles.rewardContainer} key={idx}>
-                <View style={styles.starContainer}>
-                  <Text style={styles.starText}>{8}</Text>
-                  <Icon
-                    name='fontawesome|star-o'
-                    size={40}
-                    style={styles.star}
-                    color='#6A85B1'
-                    ></Icon>
-                </View>
-                <Icon
-                  name='fontawesome|minus-square'
-                  size={30}
-                  style={styles.smallRewardIcons}
-                  color='#6A85B1'
-                  />
-                <Icon
-                  name='fontawesome|plus-square'
-                  size={30}
-                  style={styles.smallRewardIcons}
-                  color='#6A85B1'
-                  />
-                <Text style={styles.reward}>{text}</Text>
-                <Text style={styles.rewardStars}>({reward.stars} stars)</Text>
-                <Icon
-                  name='fontawesome|check-square-o'
-                  size={30}
-                  style={styles.rewardIcons}
-                  color='#6A85B1'
-                  />
-              </View>;
-    });
+    var content;
+    if (!this.state.edit) {
+      content = <TasksEdit
+                  rewards={MY_REWARDS}
+                  username={this.props.username}
+                  toggleEdit={this.toggleEdit}
+                  />;
+    } else {
+      content = <TasksList
+                  rewards={MY_REWARDS}
+                  username={this.props.username}
+                  toggleEdit={this.toggleEdit}
+                   />;
+    }
     return (
-    <View>
-      <View style={{flexDirection: 'row', height: 100, marginTop: 60}}>
-        <View style={{backgroundColor: '#e6e6e6', flex: 0.5, flexDirection: 'row'}} >
-          <Icon
-            name='fontawesome|user'
-            size={40}
-            style={styles.facebook}
-            color='black'
-            >
-          </Icon>
-
-        <Text style={{fontSize: 20, marginLeft: 10, marginTop: 20, flex: 2}}>
-            {this.props.username}
-          </Text>
-        </View>
-        <View style={{backgroundColor: '#b4b4b4', flex: 0.5}} >
-          <Text style={{flex: 2, padding: 15, fontSize: 18, backgroundColor: '#a7a7a7' }}>
-            Stars This Week: 10
-          </Text>
-          <Text style={{flex: 1, padding: 15, fontSize: 18 }}>
-            Total Stars: 50
-          </Text>
-        </View>
+      <View>
+        {content}
       </View>
-      <View style={{flexDirection: 'row', height: 70}}>
-        <View style={{backgroundColor: '#f7f7f7', flex: 1, flexDirection: 'row'}} >
-          <Icon
-            name='fontawesome|angle-left'
-            size={40}
-            style={styles.calendarSigns}
-            color='black'
-            />
-          <Text style={{fontSize: 20, marginTop: 20, textAlign: 'center', flex: 8}}>
-             Today, Saturday, October 11, 2015
-          </Text>
-          <Icon
-            name='fontawesome|angle-right'
-            size={40}
-            style={styles.calendarSigns}
-            color='black'
-            />
-        </View>
-      </View>
-      <ScrollView
-        style={styles.scrollView}
-        contentInset={{bottom:49}}
-        automaticallyAdjustContentInsets={false}
-        >
-        {rewards}
-        <View style={styles.editTaskContainer}>
-          <Text style={styles.editTaskText}>
-            Edit Tasks
-          </Text>
-        </View>
-      </ScrollView>
-    </View>
     )
   }
 });
