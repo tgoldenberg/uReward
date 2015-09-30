@@ -1,3 +1,5 @@
+// "use strict";
+var _ = require('underscore');
 var React = require('react-native');
 var { Icon, } = require('react-native-icons');
 
@@ -8,18 +10,52 @@ var {
   TextInput,
   TouchableHighlight,
   ScrollView,
-  Image
+  Image,
+  AsyncStorage
 } = React;
 
+const ITEMS_KEY = '@AsyncStorageExample:items';
+const TOTAL = '@AsyncStorageExample:total';
+const ITEMS_KEY_TODAY = `@AsyncStorageExample:itemsToday`;
+
 var TasksEdit = React.createClass({
+  getInitialState: function() {
+    return {items: []};
+  },
+  deleteTask: function(id) {
+    var {items} = this.state;
+    delete items[id];
+
+    this.setState({items: _.compact(items)});
+    AsyncStorage.setItem(ITEMS_KEY_TODAY, JSON.stringify(_.compact(items)));
+    this.props.deleteTask(id);
+  },
+  componentDidMount: function() {
+    this._loadInitialState().done();
+  },
+  async _loadInitialState() {
+    try {
+      var items = await AsyncStorage.getItem(ITEMS_KEY_TODAY);
+      if (items !== null) {
+        this.setState({items: JSON.parse(items)})
+      } else {
+        var items = this.props.rewards.map(function(item) {
+          return {item: item, stars: 0};
+        })
+        AsyncStorage.setItem(ITEMS_KEY_TODAY, JSON.stringify(items));
+        this.setState({items: items});
+      }
+    } catch (error) {
+    }
+  },
   render: function() {
     var self = this;
-    var rewards = this.props.rewards.map(function(reward, idx){
-      var text = reward.name.substring(0,23);
+    var rewards = this.state.items.map(function(reward, idx){
+      var text = reward.item.name.substring(0,23);
       if (text.length == 23) {
         text += "...";
       }
-      var boundDelete = self.props.deleteTask.bind(this, idx);
+      var boundDelete = self.deleteTask.bind(null, idx);
       console.log("PROPS", self.props);
       return  <View style={styles.rewardContainer} key={idx} ref={`item${idx}`}>
                 <TouchableHighlight
@@ -35,7 +71,7 @@ var TasksEdit = React.createClass({
                     />
                 </TouchableHighlight>
                 <View style={styles.starContainer}>
-                  <Text style={styles.starText}>{8}</Text>
+                  <Text style={styles.starText}>{reward.stars}</Text>
                   <Icon
                     name='fontawesome|star-o'
                     size={40}
@@ -46,7 +82,7 @@ var TasksEdit = React.createClass({
 
 
                 <Text style={styles.reward}>{text}</Text>
-                <Text style={styles.rewardStars}>({reward.stars} stars)</Text>
+                <Text style={styles.rewardStars}>({reward.item.stars} stars)</Text>
                 <Icon
                   name='fontawesome|bars'
                   size={30}
@@ -76,7 +112,7 @@ var TasksEdit = React.createClass({
               Stars This Week: 10
             </Text>
             <Text style={{flex: 1, padding: 15, fontSize: 18 }}>
-              Total Stars: 50
+              Total Stars: {this.props.total}
             </Text>
           </View>
         </View>

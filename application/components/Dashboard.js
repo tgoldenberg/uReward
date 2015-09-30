@@ -124,12 +124,12 @@ var Dashboard = React.createClass({
                   />;
     } else {
       content = <TasksList
-                  total={this.state.total}
                   rewards={this.state.items}
                   username={this.props.username}
                   toggleEdit={this.toggleEdit}
                   createTask={this.createTask}
                   changeTotal={this.changeTotal}
+                  total={this.state.total}
                    />;
     }
     return (

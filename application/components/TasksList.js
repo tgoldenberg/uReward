@@ -19,6 +19,10 @@ var TasksList = React.createClass({
   },
   componentDidMount: function() {
     this._loadInitialState().done();
+    // var items = this.props.rewards.map(function(item) {
+    //   return {item: item, stars: 0};
+    // })
+    // AsyncStorage.setItem(ITEMS_KEY_TODAY, JSON.stringify(items));
   },
   async _loadInitialState() {
     try {
@@ -60,8 +64,8 @@ var TasksList = React.createClass({
       if (text.length == 23) {
         text += "...";
       }
-      var boundAddStar        =  self.addStar.bind(this, idx);
-      var boundDecreaseStar   =  self.decreaseStar.bind(this, idx);
+      var boundAddStar        =  self.addStar.bind(null, idx);
+      var boundDecreaseStar   =  self.decreaseStar.bind(null, idx);
       return  <View style={styles.rewardContainer} key={idx} ref={`item${idx}`}>
                 <View style={styles.starContainer}>
                   <Text style={styles.starText}>{reward.stars}</Text>
