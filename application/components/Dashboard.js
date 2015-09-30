@@ -10,6 +10,7 @@ var {
   TextInput,
   TouchableHighlight,
   ScrollView,
+  AsyncStorage,
   Image
 } = React;
 
@@ -213,28 +214,53 @@ var styles = StyleSheet.create({
     justifyContent: 'center'
   }
 });
-
+ITEMS_KEY = '@AsyncStorageExample:items';
 var Dashboard = React.createClass({
+  componentDidMount() {
+    this._loadInitialState().done();
+  },
+
+  async _loadInitialState() {
+    try {
+      var items = await AsyncStorage.getItem(ITEMS_KEY);
+      if (items !== null){
+        this.setState({items: items});
+      } else {
+        this.setState({items: MY_REWARDS})
+      }
+    } catch (error) {
+    }
+  },
   getInitialState: function() {
-    return {edit: false};
+    return {edit: false, items: []};
+  },
+  createTask: function() {
+    console.log("CREATE")
   },
   toggleEdit: function() {
     this.setState({edit: !this.state.edit});
     console.log("EDIT", this.state.edit);
   },
+  deleteTask: function(id) {
+    var items = this.state.items;
+    delete items[id];
+    this.setState({items: items})
+  },
   render: function() {
     var content;
     if (this.state.edit) {
       content = <TasksEdit
-                  rewards={MY_REWARDS}
+                  rewards={this.state.items}
                   username={this.props.username}
                   toggleEdit={this.toggleEdit}
+                  deleteTask={this.deleteTask}
                   />;
     } else {
       content = <TasksList
-                  rewards={MY_REWARDS}
+                  rewards={this.state.items}
                   username={this.props.username}
                   toggleEdit={this.toggleEdit}
+                  createTask={this.createTask}
                    />;
     }
     return (

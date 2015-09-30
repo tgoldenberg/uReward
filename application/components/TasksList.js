@@ -22,7 +22,7 @@ var TasksList = React.createClass({
       if (text.length == 23) {
         text += "...";
       }
-      return  <View style={styles.rewardContainer} key={idx}>
+      return  <View style={styles.rewardContainer} key={idx} ref={`item${idx}`}>
                 <View style={styles.starContainer}>
                   <Text style={styles.starText}>{8}</Text>
                   <Icon
@@ -112,6 +112,17 @@ var TasksList = React.createClass({
               >
               <Text style={styles.editTaskText}>
                 Edit Tasks
+              </Text>
+            </TouchableHighlight>
+          </View>
+          <View style={styles.editTaskContainer}>
+            <TouchableHighlight
+              style={styles.editButton}
+              underlayColor="white"
+              onPress={this.props.createTask}
+              >
+              <Text style={styles.editTaskText}>
+                Create Task
               </Text>
             </TouchableHighlight>
           </View>

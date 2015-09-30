@@ -120,16 +120,17 @@ var BasicStorageExample = React.createClass({
   async _onValueChange(selectedValue) {
     try {
       await AsyncStorage.setItem(STORAGE_KEY, this.state.username);
+
     } catch (error) {
     }
+    this.props.navigator.push({
+      title: 'Dashboard',
+      component: Dashboard,
+      passProps: {username: this.state.username}
+    });
     this.setState({storedName: this.state.username});
-    if (this.state.username != "") {
-      this.props.navigator.push({
-        title: 'Dashboard',
-        component: Dashboard,
-        passProps: {username: this.state.username}
-      });
-    }
+
+
   }
 });
 

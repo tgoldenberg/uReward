@@ -13,18 +13,27 @@ var {
 
 var TasksEdit = React.createClass({
   render: function() {
+    var self = this;
     var rewards = this.props.rewards.map(function(reward, idx){
       var text = reward.name.substring(0,23);
       if (text.length == 23) {
         text += "...";
       }
-      return  <View style={styles.rewardContainer} key={idx}>
-                <Icon
-                  name='fontawesome|times'
-                  size={30}
-                  style={styles.times}
-                  color='#777'
-                  />
+      var boundDelete = self.props.deleteTask.bind(this, idx);
+      console.log("PROPS", self.props);
+      return  <View style={styles.rewardContainer} key={idx} ref={`item${idx}`}>
+                <TouchableHighlight
+                  underlayColor="transparent"
+                  onPress={boundDelete}
+                  ref={`reward${idx}`}
+                  >
+                  <Icon
+                    name='fontawesome|times'
+                    size={30}
+                    style={styles.times}
+                    color='#777'
+                    />
+                </TouchableHighlight>
                 <View style={styles.starContainer}>
                   <Text style={styles.starText}>{8}</Text>
                   <Icon
