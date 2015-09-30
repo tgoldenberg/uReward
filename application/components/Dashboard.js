@@ -59,7 +59,86 @@ MY_REWARDS = [
     name: "Get great recommendations from direct supervisors",
     stars: 20
   }
-]
+];
+
+
+ITEMS_KEY = '@AsyncStorageExample:items';
+TOTAL = '@AsyncStorageExample:total';
+var Dashboard = React.createClass({
+
+  componentDidMount() {
+    // AsyncStorage.setItem(ITEMS_KEY, JSON.stringify(MY_REWARDS));
+    this._loadInitialState().done();
+  },
+
+  async _loadInitialState() {
+    try {
+      var items = await AsyncStorage.getItem(ITEMS_KEY);
+      var total = await AsyncStorage.getItem(TOTAL);
+      if (items == null){
+        this.setState({items: JSON.parse(items), total: parseInt(total)});
+      } else {
+        console.log("NO ITEMS");
+        AsyncStorage.setItem(ITEMS_KEY, JSON.stringify(MY_REWARDS));
+        AsyncStorage.setItem(TOTAL, '0');
+        this.setState({items: MY_REWARDS, total: 0})
+      }
+    } catch (error) {
+    }
+  },
+  changeTotal: function(amount) {
+    var {total} = this.state;
+    total += amount;
+    this.setState({total: total})
+    AsyncStorage.setItem(TOTAL, total.toString());
+  },
+  getInitialState: function() {
+    return {
+      edit: false,
+      items: [],
+      total: 0
+    };
+  },
+  createTask: function() {
+    console.log("CREATE")
+  },
+  toggleEdit: function() {
+    this.setState({edit: !this.state.edit});
+    console.log("EDIT", this.state.edit);
+  },
+  deleteTask: function(id) {
+    var items = this.state.items;
+    delete items[id];
+    this.setState({items: items})
+  },
+  render: function() {
+    var content;
+    if (this.state.edit) {
+      content = <TasksEdit
+                  rewards={this.state.items}
+                  username={this.props.username}
+                  toggleEdit={this.toggleEdit}
+                  deleteTask={this.deleteTask}
+                  changeTotal={this.changeTotal}
+                  total={this.state.total}
+                  />;
+    } else {
+      content = <TasksList
+                  total={this.state.total}
+                  rewards={this.state.items}
+                  username={this.props.username}
+                  toggleEdit={this.toggleEdit}
+                  createTask={this.createTask}
+                  changeTotal={this.changeTotal}
+                   />;
+    }
+    return (
+      <View>
+        {content}
+      </View>
+    )
+  }
+});
 
 var styles = StyleSheet.create({
   mainContainer: {
@@ -212,62 +291,6 @@ var styles = StyleSheet.create({
   editButton: {
     alignSelf: 'stretch',
     justifyContent: 'center'
-  }
-});
-ITEMS_KEY = '@AsyncStorageExample:items';
-var Dashboard = React.createClass({
-  componentDidMount() {
-    this._loadInitialState().done();
-  },
-
-  async _loadInitialState() {
-    try {
-      var items = await AsyncStorage.getItem(ITEMS_KEY);
-      if (items !== null){
-        this.setState({items: items});
-      } else {
-        this.setState({items: MY_REWARDS})
-      }
-    } catch (error) {
-    }
-  },
-  getInitialState: function() {
-    return {edit: false, items: []};
-  },
-  createTask: function() {
-    console.log("CREATE")
-  },
-  toggleEdit: function() {
-    this.setState({edit: !this.state.edit});
-    console.log("EDIT", this.state.edit);
-  },
-  deleteTask: function(id) {
-    var items = this.state.items;
-    delete items[id];
-    this.setState({items: items})
-  },
-  render: function() {
-    var content;
-    if (this.state.edit) {
-      content = <TasksEdit
-                  rewards={this.state.items}
-                  username={this.props.username}
-                  toggleEdit={this.toggleEdit}
-                  deleteTask={this.deleteTask}
-                  />;
-    } else {
-      content = <TasksList
-                  rewards={this.state.items}
-                  username={this.props.username}
-                  toggleEdit={this.toggleEdit}
-                  createTask={this.createTask}
-                   />;
-    }
-    return (
-      <View>
-        {content}
-      </View>
-    )
   }
 });
 
