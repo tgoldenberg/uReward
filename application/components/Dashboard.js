@@ -57,8 +57,13 @@ class Dashboard extends React.Component {
     AsyncStorage.setItem(TOTAL, total.toString());
   }
 
-  createTask() {
-    console.log("CREATE")
+  createTask(items) {
+    console.log("CREATE");
+    var newItems = items.map(function(item) {
+      return item.item;
+    });
+    this.setState({items: newItems});
+    AsyncStorage.setItem(ITEMS_KEY, JSON.stringify(newItems));
   }
 
   toggleEdit() {

@@ -14,12 +14,18 @@ var {
   AsyncStorage
 } = React;
 
-PickerItemIOS = PickerIOS.Item;
+var PickerItemIOS = PickerIOS.Item;
 
 ITEMS_KEY_TODAY = `@uReward:itemsToday`;
 var TasksList = React.createClass({
   getInitialState: function() {
-    return {items: [], createMode: false, inputText: ""}
+    return {
+      items: [],
+      createMode: false,
+      inputText: "",
+      numStars: 0,
+      selectedNum: 1,
+    }
   },
   componentDidMount: function() {
     this._loadInitialState().done();
@@ -59,6 +65,9 @@ var TasksList = React.createClass({
     this.setState({items: items});
     this.props.changeTotal(1);
   },
+  toggleCreateMode: function() {
+    this.setState({createMode: !this.state.createMode});
+  },
   decreaseStar: function(e) {
     console.log("DECREASE STAR");
     var {items} = this.state;
@@ -69,6 +78,15 @@ var TasksList = React.createClass({
       this.props.changeTotal(-1);
     }
   },
+  createNewTask: function() {
+    if (this.state.inputText != "") {
+      var {inputText, selectedNum, items} = this.state;
+      items.push({item: {name: inputText, stars: selectedNum}, stars: 0});
+      AsyncStorage.setItem(ITEMS_KEY_TODAY, JSON.stringify(items));
+      this.setState({items: items, inputText: "", selectedNum: 1, createMode: false});
+      this.props.createTask(items);
+    }
+  },
   addAllStars: function(id) {
     console.log("ADD ALL STARS");
     var {items} = this.state;
@@ -77,8 +95,69 @@ var TasksList = React.createClass({
     AsyncStorage.setItem(ITEMS_KEY_TODAY, JSON.stringify(items));
     this.props.changeTotal(starAmount);
   },
+  selectNum: function(e) {
+    this.setState({selectedNum: e.nativeEvent.newValue});
+  },
+  chooseNum: function(e) {
+    debugger
+  },
   render: function() {
     var self = this;
+    var taskCreateContent;
+    if (this.state.createMode) {
+
+      taskCreateContent = <View><View style={styles.createTaskContainer}>
+                            <TextInput style={styles.taskInput} value={this.state.inputText} onChange={this.handleInputChange} placeholder={"Task Name"}/>
+                          </View>
+                          <View style={styles.editTaskContainer}>
+                            <Text style={styles.editTaskText}># of Stars: {this.state.selectedNum}</Text>
+                          </View>
+                          <TouchableHighlight onPress={this.createNewTask}>
+                            <View style={styles.editTaskContainer}>
+                              <Text style={styles.editTaskText}>Create New Task</Text>
+                            </View>
+                          </TouchableHighlight>
+                          <View>
+                            <PickerIOS
+                              selectedValue={this.state.selectedNum}
+                              onChange={this.selectNum}
+                              >
+                              {[0,1,2,3,4,5,6,7,8,9].map((num) => (
+                                <PickerItemIOS
+                                  key={num}
+                                  value={num}
+                                  label={num.toString()}
+                                  />
+                              )
+                            )}
+                            </PickerIOS>
+                          </View></View>
+    } else {
+      taskCreateContent = <View>
+                            <View style={styles.editTaskContainer}>
+                              <TouchableHighlight
+                                style={styles.editButton}
+                                underlayColor="white"
+                                onPress={this.props.toggleEdit}
+                                >
+                                <Text style={styles.editTaskText}>
+                                  Edit Tasks
+                                </Text>
+                              </TouchableHighlight>
+                            </View>
+                            <View style={styles.editTaskContainer}>
+                              <TouchableHighlight
+                                style={styles.editButton}
+                                underlayColor="white"
+                                onPress={this.toggleCreateMode}
+                                >
+                                <Text style={styles.editTaskText}>
+                                  Create Task
+                                </Text>
+                              </TouchableHighlight>
+                            </View>
+                          </View>
+    }
     var rewards = this.state.items.map(function(reward, idx){
       var text = reward.item.name.substring(0,23);
       if (text.length == 23) {
@@ -181,38 +260,7 @@ var TasksList = React.createClass({
           automaticallyAdjustContentInsets={false}
           >
           {rewards}
-          <View style={styles.editTaskContainer}>
-            <TouchableHighlight
-              style={styles.editButton}
-              underlayColor="white"
-              onPress={this.props.toggleEdit}
-              >
-              <Text style={styles.editTaskText}>
-                Edit Tasks
-              </Text>
-            </TouchableHighlight>
-          </View>
-          <View style={styles.editTaskContainer}>
-            <TouchableHighlight
-              style={styles.editButton}
-              underlayColor="white"
-              onPress={this.props.createTask}
-              >
-              <Text style={styles.editTaskText}>
-                Create Task
-              </Text>
-            </TouchableHighlight>
-          </View>
-          <View style={styles.createTaskContainer}>
-            <TextInput style={styles.taskInput} value={this.state.inputText} onChange={this.handleInputChange} placeholder={"Task Name"}/>
-            <PickerIOS
-              selectedValue={0}>
-              <PickerItemIOS
-                value={0}
-                label={"stars"}
-                />
-            </PickerIOS>
-          </View>
+          {taskCreateContent}
         </ScrollView>
       </View>
     )
