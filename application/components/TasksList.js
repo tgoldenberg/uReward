@@ -228,7 +228,7 @@ var TasksList = React.createClass({
           </View>
           <View style={{backgroundColor: '#b4b4b4', flex: 0.5}} >
             <Text style={{flex: 2, padding: 15, fontSize: 18, backgroundColor: '#a7a7a7' }}>
-              Stars This Week: 10
+              Stars This Week: {this.props.starsThisWeek}
             </Text>
             <Text style={{flex: 1, padding: 15, fontSize: 18 }}>
               Total Stars: {this.props.total}
@@ -244,7 +244,7 @@ var TasksList = React.createClass({
               color='black'
               />
             <Text style={{fontSize: 20, marginTop: 20, textAlign: 'center', flex: 8}}>
-               Today, Saturday, October 11, 2015
+               Today {new Date().toDateString()}
             </Text>
             <Icon
               name='fontawesome|angle-right'

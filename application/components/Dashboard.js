@@ -2,8 +2,9 @@ var React = require('react-native');
 var { Icon, } = require('react-native-icons');
 var TasksList = require('./TasksList');
 var TasksEdit = require('./TasksEdit');
-var seeds = require('./seeds');
+var seeds = require('./task_seeds');
 var styles = require('./styles');
+const starSeeds = require('./star_seeds');
 
 var {
   View,
@@ -18,6 +19,7 @@ var {
 
 const ITEMS_KEY = '@uReward:items';
 const TOTAL = '@uReward:total';
+const STARS_THIS_WEEK = '@uReward:starsThisWeek';
 
 class Dashboard extends React.Component {
   constructor(props){
@@ -25,7 +27,8 @@ class Dashboard extends React.Component {
     this.state = {
       edit: false,
       items: [],
-      total: 0
+      total: 0,
+      starsThisWeek: 0,
     }
   }
 
@@ -37,14 +40,34 @@ class Dashboard extends React.Component {
     try {
       let items = await AsyncStorage.getItem(ITEMS_KEY);
       let total = await AsyncStorage.getItem(TOTAL);
-      if (items !== null && items != undefined){
-        // console.log("FOUND ITEMS", items);
-        this.setState({items: JSON.parse(items), total: parseInt(total)});
+      let starsThisWeek = await AsyncStorage.getItem(STARS_THIS_WEEK);
+      if (items != null && items != undefined){
+        console.log("FOUND ITEMS", items);
+        var starList = JSON.parse(starsThisWeek);
+        // debugger
+        var numStars = 0;
+        var now = new Date();
+        var lastWeek = new Date(now - 7*24*60*60*1000);
+        starList.forEach(function(item) {
+          if (item.date >= lastWeek) {
+            numStars += item.stars;
+          }
+        })
+        this.setState({items: JSON.parse(items), total: parseInt(total), starsThisWeek: numStars});
       } else {
-        // console.log("NO ITEMS");
+        console.log("NO ITEMS");
         AsyncStorage.setItem(ITEMS_KEY, JSON.stringify(seeds));
         AsyncStorage.setItem(TOTAL, '0');
-        this.setState({items: seeds, total: 0})
+        AsyncStorage.setItem(STARS_THIS_WEEK, JSON.stringify(starSeeds));
+        var numStars = 0;
+        var now = new Date();
+        var lastWeek = new Date(now - 7*24*60*60*1000);
+        starSeeds.forEach(function(item) {
+          if (item.date >= lastWeek) {
+            numStars += item.stars;
+          }
+        })
+        this.setState({items: seeds, total: 0, starsThisWeek: numStars })
       }
     } catch (error) {
     }
@@ -88,6 +111,7 @@ class Dashboard extends React.Component {
                   deleteTask={this.deleteTask.bind(this)}
                   changeTotal={this.changeTotal.bind(this)}
                   total={this.state.total}
+                  starsThisWeek={this.state.starsThisWeek}
                   />;
     } else {
       myContent = <TasksList
@@ -97,6 +121,7 @@ class Dashboard extends React.Component {
                   createTask={this.createTask.bind(this)}
                   changeTotal={this.changeTotal.bind(this)}
                   total={this.state.total}
+                  starsThisWeek={this.state.starsThisWeek}
                    />;
     }
     return (

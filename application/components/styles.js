@@ -2,6 +2,14 @@ var React = require('react-native');
 var { StyleSheet } = React;
 
 var styles = StyleSheet.create({
+  registerContainer: {
+    flex: 1,
+    padding: 30,
+    marginTop: 65,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    backgroundColor: '#6A85B1'
+  },
   mainContainer: {
     flex: 1,
     flexDirection: 'column',

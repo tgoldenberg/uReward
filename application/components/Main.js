@@ -77,21 +77,7 @@ var Main = React.createClass({
   render: function() {
     return(
       <View style={styles.mainContainer}>
-      <Text style={styles.title}> uReward </Text>
-      <TextInput
-        style={styles.searchInput}
-        placeholder={"Your name"}
-        value={this.state.username}
-        onChange={this.handleChange.bind(this)}
-        ref="username"
-         />
-       <TouchableHighlight
-          style={styles.button}
-          underlayColor="white"
-          onPress={this.handleSubmit.bind(this)}
-        >
-          <Text style={styles.buttonText}> SEARCH </Text>
-        </TouchableHighlight>
+        <Text style={styles.title}> uReward </Text>
       </View>
       )
   }
