@@ -2,26 +2,16 @@ var React = require('react-native');
 var Dashboard = require('./Dashboard');
 var styles = require('./styles');
 var USERNAME_KEY = '@uReward:username';
-
-var {
-  AsyncStorage,
-  Text,
-  TextInput,
-  TouchableHighlight,
-  View
-} = React;
-
+var { AsyncStorage, Text, TextInput, TouchableHighlight, View } = React;
 
 class Register extends React.Component{
   constructor(props) {
     super(props);
     this.state = { username: "", storedName: "" }
   }
-
   componentDidMount() {
     this._loadInitialState();
   }
-
   async _loadInitialState() {
     var username = await AsyncStorage.getItem(USERNAME_KEY);
     if (username != null) {
@@ -33,11 +23,9 @@ class Register extends React.Component{
       })
     }
   }
-
   handleChange(e) {
     this.setState({username: e.nativeEvent.text});
   }
-
   handlePress() {
     AsyncStorage.setItem(USERNAME_KEY, this.state.username);
     this.setState({storedName: this.state.username});
@@ -47,7 +35,6 @@ class Register extends React.Component{
       passProps: {username: this.state.username}
     })
   }
-
   render() {
     return (
       <View style={styles.registerContainer}>
@@ -65,6 +52,5 @@ class Register extends React.Component{
     );
   }
 };
-
 
 module.exports = Register;
