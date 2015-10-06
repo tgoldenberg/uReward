@@ -15,17 +15,51 @@ class Dashboard extends React.Component {
       edit: false,
       items: [],
       date: new Date().toLocaleDateString(),
-      today: new Date().toLocaleDateString()
+      today: new Date().toLocaleDateString(),
+      total: 0,
+      starsThisWeek: 0
      }
   }
   componentDidMount() {
     this._loadInitialState().done();
   }
+
+  setStarsThisWeek() {
+    var starsThisWeek = 0;
+    var today = new Date();
+    var week = [
+      today.toLocaleDateString(),
+      new Date(today - 24*60*60*1000*1).toLocaleDateString(),
+      new Date(today - 24*60*60*1000*2).toLocaleDateString(),
+      new Date(today - 24*60*60*1000*3).toLocaleDateString(),
+      new Date(today - 24*60*60*1000*4).toLocaleDateString(),
+      new Date(today - 24*60*60*1000*5).toLocaleDateString(),
+      new Date(today - 24*60*60*1000*6).toLocaleDateString(),
+    ]
+    console.log("WEEK", week);
+    this.state.items.forEach(function(item) {
+      week.forEach(function(day){
+        if (item.datesStarred[day] != null) {
+          starsThisWeek += item.datesStarred[day];
+        }
+      })
+    });
+    this.setState({starsThisWeek: starsThisWeek })
+  }
   async _loadInitialState() {
     let items = await AsyncStorage.getItem(ITEMS_KEY);
+    let total = await AsyncStorage.getItem(TOTAL);
+
+    if (total != null) {
+      console.log("FOUND TOTAL", total);
+      this.setState({total: parseInt(JSON.parse(total))})
+    } else {
+      AsyncStorage.setItem(TOTAL, '0');
+    }
     if (items != null) {
       console.log("FOUND ITEMS", items);
-      this.setState({items: JSON.parse(items) })
+      this.setState({items: JSON.parse(items) });
+      this.setStarsThisWeek();
     }
   }
 
@@ -33,6 +67,7 @@ class Dashboard extends React.Component {
     console.log(items[0].datesStarred)
     AsyncStorage.setItem(ITEMS_KEY, JSON.stringify(items));
     this.setState({items: items});
+    this.setStarsThisWeek();
   }
 
   changeTotal(amount) {
@@ -44,6 +79,7 @@ class Dashboard extends React.Component {
 
   createTask(item) {
     var {items} = this.state;
+    item.datesStarred[this.state.date] = 0;
     items.push(item);
     this.setState({items: items});
     AsyncStorage.setItem(ITEMS_KEY, JSON.stringify(items));
@@ -65,10 +101,13 @@ class Dashboard extends React.Component {
   }
 
   changeDate(date) {
+    console.log("NEW DATE", date);
     this.setState({date: date.toLocaleDateString()});
   }
 
   render() {
+    console.log(this.state.items);
+
     let myContent;
     if (this.state.edit) {
       myContent = <TasksEdit

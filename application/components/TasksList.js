@@ -12,12 +12,31 @@ var TasksList = React.createClass({
   getInitialState: function() {
     return {inputText: "", createMode: false};
   },
+  componentDidUpdate: function() {
+    this.setDefaultStars();
+  },
+  setDefaultStars: function() {
+    var self = this;
+    var items = _.compact(this.props.items);
+    var changes = 0;
+    items.forEach(function(item, idx){
+      let today = self.props.date;
+      if (item.datesStarred[today] == null) {
+        items[idx].datesStarred[today] = 0;
+        changes += 1;
+      }
+    });
+    if (changes > 0) {
+      console.log("NEEDS CHANGES", changes);
+      self.props.changeItems(items);
+    }
+  },
   handleInputChange: function(e) {
     // TODO: change inputText state
     this.setState({inputText: e.nativeEvent.text});
   },
   addStar: function(e) {
-    console.log("ADD STAR");
+    console.log("ADD STAR", this.props);
     var {items, date} = this.props;
     items[e].datesStarred[date] += 1;
     console.log(items[e].datesStarred);
@@ -27,7 +46,7 @@ var TasksList = React.createClass({
     this.setState({createMode: !this.state.createMode});
   },
   decreaseStar: function(e) {
-    console.log("DECREASE STAR");
+    console.log("DECREASE STAR", this.props);
     var {items, date} = this.props;
     if (items[e].datesStarred[date] > 0) {
       items[e].datesStarred[date] -= 1;
@@ -45,14 +64,15 @@ var TasksList = React.createClass({
     this.setState({createMode: false})
   },
   addAllStars: function(e) {
-    console.log("ADD ALL STARS");
+    console.log("ADD ALL STARS", this.props);
     var {items, date} = this.props;
     items[e].datesStarred[date] += items[e].stars;
     console.log(items[e].datesStarred);
     this.props.changeItems(items);
   },
+
   prevDate: function() {
-    var date = new Date(this.props.date);
+    var date = new Date(this.props.date).valueOf();
     var prevDate = new Date(date - 24*60*60*1000);
     this.props.changeDate(prevDate);
   },
@@ -64,8 +84,7 @@ var TasksList = React.createClass({
   selectNum: function(e) {
     this.setState({selectedNum: e.nativeEvent.newValue});
   },
-  chooseNum: function(e) {
-  },
+
   render: function() {
     var self = this;
     var isToday = this.props.date == new Date().toLocaleDateString() ? "Today " : "";
@@ -104,19 +123,17 @@ var TasksList = React.createClass({
                           </View>
     }
     var items = _.compact(this.props.items);
-    let changes = 0;
+    var changes = 0;
     var rewards = items.map(function(item, idx){
-      var text = item.name.substring(0,23);
+      var text = item.name ? item.name.substring(0,23): "";
       if (text.length == 23) { text += "..."; }
       let today = self.props.date;
-      var todayStars;
-      if (item.datesStarred[today]) {
-        todayStars = item.datesStarred[today]
-      } else {
-        items[idx].datesStarred[today] = 0;
-        todayStars = 0;
-        changes += 1;
+      var todayStars = 0;
+      console.log("THIS DATE", item.datesStarred[today]);
+      if (item.datesStarred[today] != null) {
+        todayStars = item.datesStarred[today];
       }
+      var todayStars = item.datesStarred[today] ? item.datesStarred[today] : 0;
       var boundAddStar        =  self.addStar.bind(null, idx);
       var boundDecreaseStar   =  self.decreaseStar.bind(null, idx);
       var boundAddAllStars    =  self.addAllStars.bind(null, idx)
@@ -138,8 +155,9 @@ var TasksList = React.createClass({
                 </TouchableHighlight>
               </View>;
       });
-      if (changes > 0 ) {
-        AsyncStorage.setItem(ITEMS_KEY, JSON.stringify(items));
+      if (changes > 0) {
+        console.log("NEEDS CHANGES", changes);
+        self.props.changeItems(items);
       }
     return (
       <View>
@@ -161,11 +179,11 @@ var TasksList = React.createClass({
         </View>
         <View style={{flexDirection: 'row', height: 70}}>
           <View style={{backgroundColor: '#f7f7f7', flex: 1, flexDirection: 'row'}} >
-            <TouchableHighlight underlayColor="#CCC" onPress={this.prevDate.bind(this)}>
+            <TouchableHighlight underlayColor="#CCC" onPress={this.prevDate}>
               <Icon name='fontawesome|angle-left' size={40} style={styles.calendarSigns} color='black'/>
             </TouchableHighlight>
             <Text style={{fontSize: 20, marginTop: 20, textAlign: 'center', flex: 8}}>{isToday} {new Date(this.props.date).toDateString()}</Text>
-            <TouchableHighlight underlayColor="#CCC" onPress={this.nextDate.bind(this)}>
+            <TouchableHighlight underlayColor="#CCC" onPress={this.nextDate}>
               <Icon name='fontawesome|angle-right' size={40} style={styles.calendarSigns} color='black'/>
             </TouchableHighlight>
           </View>
