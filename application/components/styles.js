@@ -16,6 +16,7 @@ var styles = StyleSheet.create({
     paddingLeft: 5,
     flex: 1,
     flexDirection: 'column',
+    backgroundColor: 'transparent'
   },
   payoutButton: {
     backgroundColor: '#6A85B1',
@@ -30,7 +31,8 @@ var styles = StyleSheet.create({
     padding: 8,
     textAlign: 'center',
     marginLeft: 5,
-    color: 'white'
+    color: 'white',
+    backgroundColor: 'transparent'
   },
   mainContainer: {
     flex: 1,
