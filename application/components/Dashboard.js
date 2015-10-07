@@ -117,7 +117,7 @@ class Dashboard extends React.Component {
     this.props.navigator.push({
       title: 'Payout',
       component: Payout,
-      passProps: {total: total, starsThisWeek: starsThisWeek}
+      passProps: {total: total, starsThisWeek: starsThisWeek, username: this.props.username}
     });
   }
   render() {
