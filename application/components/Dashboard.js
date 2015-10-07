@@ -80,6 +80,7 @@ class Dashboard extends React.Component {
   createTask(item) {
     var {items} = this.state;
     item.datesStarred[this.state.date] = 0;
+    item.deleted = false;
     items.push(item);
     this.setState({items: items});
     AsyncStorage.setItem(ITEMS_KEY, JSON.stringify(items));
@@ -93,11 +94,10 @@ class Dashboard extends React.Component {
 
   deleteTask(id) {
     var items = _.compact(this.state.items);
-    delete items[id];
-    var newItems = _.compact(items);
-    console.log("NEW ITEMS", newItems);
-    this.setState({items: newItems});
-    AsyncStorage.setItem(ITEMS_KEY, JSON.stringify(newItems));
+    items[id].deleted = true;
+    console.log("NEW ITEMS", items);
+    this.setState({items: items});
+    AsyncStorage.setItem(ITEMS_KEY, JSON.stringify(items));
   }
 
   changeDate(date) {
@@ -109,9 +109,12 @@ class Dashboard extends React.Component {
     console.log(this.state.items);
 
     let myContent;
+    var renderedItems = this.state.items.map(function(item) {
+      if (item.deleted == false) { return item; }
+    });
     if (this.state.edit) {
       myContent = <TasksEdit
-                  items={this.state.items}
+                  items={_.compact(renderedItems)}
                   username={this.props.username}
                   toggleEdit={this.toggleEdit.bind(this)}
                   deleteTask={this.deleteTask.bind(this)}
@@ -123,7 +126,7 @@ class Dashboard extends React.Component {
                   />;
     } else {
       myContent = <TasksList
-                  items={this.state.items}
+                  items={_.compact(renderedItems)}
                   username={this.props.username}
                   toggleEdit={this.toggleEdit.bind(this)}
                   createTask={this.createTask.bind(this)}

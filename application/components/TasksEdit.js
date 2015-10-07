@@ -56,7 +56,7 @@ var TasksEdit = React.createClass({
             <Text style={{fontSize: 20, marginLeft: 10, marginTop: 20, flex: 2}}>Hello World!</Text>
           </View>
           <View style={{backgroundColor: '#b4b4b4', flex: 0.5}} >
-            <Text style={{flex: 2, padding: 15, fontSize: 18, backgroundColor: '#a7a7a7' }}>Stars This Week: 10</Text>
+            <Text style={{flex: 2, padding: 15, fontSize: 18, backgroundColor: '#a7a7a7' }}>Stars This Week: {this.props.starsThisWeek}</Text>
             <Text style={{flex: 1, padding: 15, fontSize: 18 }}>Total Stars: {this.props.total}</Text>
           </View>
         </View>
