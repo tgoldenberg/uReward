@@ -10,6 +10,28 @@ var styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: '#6A85B1'
   },
+  payoutContainer: {
+    paddingBottom: 10,
+    paddingRight: 15,
+    paddingLeft: 5,
+    flex: 1,
+    flexDirection: 'column',
+  },
+  payoutButton: {
+    backgroundColor: '#6A85B1',
+    borderRadius: 5,
+    marginBottom: 10,
+    marginRight: 15,
+    marginLeft: 5,
+    height: 40
+  },
+  payoutText: {
+    fontSize: 18,
+    padding: 8,
+    textAlign: 'center',
+    marginLeft: 5,
+    color: 'white'
+  },
   mainContainer: {
     flex: 1,
     flexDirection: 'column',
