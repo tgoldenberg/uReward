@@ -1,6 +1,7 @@
 var React = require('react-native');
 var { Icon, } = require('react-native-icons');
 var TasksEdit = require('./TasksEdit');
+var Payout = require('./Payout');
 var styles = require('./styles');
 var { View, Text, StyleSheet, TextInput, TouchableHighlight, ScrollView, PickerIOS, Image, AsyncStorage } = React;
 var PickerItemIOS = PickerIOS.Item;
@@ -83,6 +84,11 @@ var TasksList = React.createClass({
   },
   selectNum: function(e) {
     this.setState({selectedNum: e.nativeEvent.newValue});
+  },
+
+  payout: function() {
+    console.log("PAYOUT", this.props);
+    this.props.payout();
   },
 
   render: function() {
@@ -169,7 +175,10 @@ var TasksList = React.createClass({
                 {this.props.username}
               </Text>
                 <View style={styles.payoutButton}>
-                <TouchableHighlight underlayColor="#bbb" style={styles.payoutContainer}>
+                <TouchableHighlight
+                  underlayColor="#bbb"
+                  onPress={this.payout}
+                  style={styles.payoutContainer}>
                   <Text style={styles.payoutText}>payout</Text>
                 </TouchableHighlight>
                 </View>

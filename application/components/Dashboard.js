@@ -2,6 +2,7 @@ var React = require('react-native');
 var { Icon, } = require('react-native-icons');
 var TasksList = require('./TasksList');
 var TasksEdit = require('./TasksEdit');
+var Payout = require('./Payout');
 var _ = require('underscore');
 var styles = require('./styles');
 var { View, Text, TextInput, TouchableHighlight, ScrollView, AsyncStorage, Image } = React;
@@ -109,7 +110,16 @@ class Dashboard extends React.Component {
     console.log("NEW DATE", date);
     this.setState({date: date.toLocaleDateString()});
   }
-
+  payout() {
+    console.log("CHANGE ROUTE TO PAYOUT")
+    var starsThisWeek = this.state.starsThisWeek;
+    var total = this.state.total;
+    this.props.navigator.push({
+      title: 'Payout',
+      component: Payout,
+      passProps: {total: total, starsThisWeek: starsThisWeek}
+    });
+  }
   render() {
     console.log(this.state.items);
 
@@ -136,6 +146,7 @@ class Dashboard extends React.Component {
                   createTask={this.createTask.bind(this)}
                   changeItems={this.changeItems.bind(this)}
                   total={this.state.total}
+                  payout={this.payout.bind(this)}
                   starsThisWeek={this.state.starsThisWeek}
                   date={this.state.date}
                   changeDate={this.changeDate.bind(this)}
