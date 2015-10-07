@@ -38,14 +38,21 @@ class Dashboard extends React.Component {
   setStarsThisWeek() {
     var starsThisWeek = 0;
     var today = new Date();
+    var sunday;
+    if (today.getDay() == 0) {
+      sunday = today;
+    } else {
+      var days = today.getDay();
+      sunday = new Date(today - 24*60*60*1000*days);
+    }
     var week = [
-      today.toLocaleDateString(),
-      new Date(today - 24*60*60*1000*1).toLocaleDateString(),
-      new Date(today - 24*60*60*1000*2).toLocaleDateString(),
-      new Date(today - 24*60*60*1000*3).toLocaleDateString(),
-      new Date(today - 24*60*60*1000*4).toLocaleDateString(),
-      new Date(today - 24*60*60*1000*5).toLocaleDateString(),
-      new Date(today - 24*60*60*1000*6).toLocaleDateString(),
+      sunday.toLocaleDateString(),
+      new Date(new Date(sunday).valueOf() + 24*60*60*1000*1).toLocaleDateString(),
+      new Date(new Date(sunday).valueOf() + 24*60*60*1000*2).toLocaleDateString(),
+      new Date(new Date(sunday).valueOf() + 24*60*60*1000*3).toLocaleDateString(),
+      new Date(new Date(sunday).valueOf() + 24*60*60*1000*4).toLocaleDateString(),
+      new Date(new Date(sunday).valueOf() + 24*60*60*1000*5).toLocaleDateString(),
+      new Date(new Date(sunday).valueOf() + 24*60*60*1000*6).toLocaleDateString(),
     ]
     console.log("WEEK", week);
     this.state.items.forEach(function(item) {
@@ -116,7 +123,6 @@ class Dashboard extends React.Component {
                   username={this.props.username}
                   toggleEdit={this.toggleEdit.bind(this)}
                   deleteTask={this.deleteTask.bind(this)}
-                  changeTotal={this.changeTotal.bind(this)}
                   total={this.state.total}
                   starsThisWeek={this.state.starsThisWeek}
                   date={this.state.date}
