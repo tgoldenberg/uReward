@@ -6,7 +6,6 @@ var _ = require('underscore');
 var styles = require('./styles');
 var { View, Text, TextInput, TouchableHighlight, ScrollView, AsyncStorage, Image } = React;
 const ITEMS_KEY = '@uReward:items';
-const TOTAL = '@uReward:total';
 
 class Dashboard extends React.Component {
   constructor(props){
@@ -22,6 +21,18 @@ class Dashboard extends React.Component {
   }
   componentDidMount() {
     this._loadInitialState().done();
+  }
+
+  setTotal() {
+    var totalStars = 0;
+    this.state.items.forEach(function(item){
+      var keys = _.keys(item.datesStarred);
+      keys.forEach(function(key){
+        totalStars += item.datesStarred[key];
+      });
+    });
+
+    this.setState({total: totalStars});
   }
 
   setStarsThisWeek() {
@@ -48,18 +59,11 @@ class Dashboard extends React.Component {
   }
   async _loadInitialState() {
     let items = await AsyncStorage.getItem(ITEMS_KEY);
-    let total = await AsyncStorage.getItem(TOTAL);
-
-    if (total != null) {
-      console.log("FOUND TOTAL", total);
-      this.setState({total: parseInt(JSON.parse(total))})
-    } else {
-      AsyncStorage.setItem(TOTAL, '0');
-    }
     if (items != null) {
       console.log("FOUND ITEMS", items);
       this.setState({items: JSON.parse(items) });
       this.setStarsThisWeek();
+      this.setTotal();
     }
   }
 
@@ -68,13 +72,7 @@ class Dashboard extends React.Component {
     AsyncStorage.setItem(ITEMS_KEY, JSON.stringify(items));
     this.setState({items: items});
     this.setStarsThisWeek();
-  }
-
-  changeTotal(amount) {
-    var {total} = this.state;
-    total += amount;
-    this.setState({total: total})
-    AsyncStorage.setItem(TOTAL, total.toString());
+    this.setTotal();
   }
 
   createTask(item) {
