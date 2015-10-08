@@ -15,14 +15,6 @@ var Payout = React.createClass({
               <Text style={{fontSize: 20, marginRight: 10, marginTop: 20, flex: 1, textAlign: 'center'}}>
                 {this.props.username}
               </Text>
-                <View style={styles.payoutButton}>
-                <TouchableHighlight
-                  underlayColor="#bbb"
-                  onPress={this.payout}
-                  style={styles.payoutContainer}>
-                  <Text style={styles.payoutText}>payout</Text>
-                </TouchableHighlight>
-                </View>
             </View>
           </View>
           <View style={{backgroundColor: '#b4b4b4', flex: 0.5}} >
@@ -36,18 +28,36 @@ var Payout = React.createClass({
         </View>
         <View style={{flexDirection: 'row', height: 70}}>
           <View style={{backgroundColor: '#f7f7f7', flex: 1, flexDirection: 'row'}} >
-            <TouchableHighlight underlayColor="#CCC" onPress={this.prevDate}>
-              <Icon name='fontawesome|angle-left' size={40} style={styles.calendarSigns} color='black'/>
-            </TouchableHighlight>
-            <Text style={{fontSize: 20, marginTop: 20, textAlign: 'center', flex: 8}}>Today</Text>
-            <TouchableHighlight underlayColor="#CCC" onPress={this.nextDate}>
-              <Icon name='fontawesome|angle-right' size={40} style={styles.calendarSigns} color='black'/>
-            </TouchableHighlight>
+            <Text style={{fontSize: 20, marginTop: 20, textAlign: 'center', flex: 8}}>Rewards</Text>
           </View>
         </View>
-        <ScrollView style={styles.scrollView} contentInset={{bottom:49}} automaticallyAdjustContentInsets={false}>
+        <ScrollView style={styles.scrollView} contentInset={{bottom:0}} automaticallyAdjustContentInsets={false}>
+          {this.props.rewards.map((reward, idx) => {
+            return <View style={styles.rewardContainer} key={idx} ref={`item${idx}`}>
+              <View style={styles.starContainer}>
+                <Text style={styles.starText}>{reward.stars}</Text>
+                <Icon name='fontawesome|star-o' size={40} style={styles.star} color='#6A85B1'/>
+              </View>
 
-
+              <Text style={styles.reward}>{reward.name}</Text>
+              <Text style={styles.buy}>BUY</Text>
+              <TouchableHighlight>
+                <Icon name='fontawesome|check-square-o' size={30} style={styles.rewardIcons} color='#6A85B1'/>
+              </TouchableHighlight>
+            </View>
+          })}
+          <View>
+            <View style={styles.editTaskContainer}>
+              <TouchableHighlight style={styles.editButton} underlayColor="#f7f7f7">
+                <Text style={styles.editTaskText}>Edit Tasks</Text>
+              </TouchableHighlight>
+            </View>
+            <View style={styles.editTaskContainer}>
+              <TouchableHighlight style={styles.editButton} underlayColor="#f7f7f7">
+                <Text style={styles.editTaskText}>Create Task</Text>
+              </TouchableHighlight>
+            </View>
+          </View>
         </ScrollView>
       </View>
     )

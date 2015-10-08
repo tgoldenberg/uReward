@@ -110,6 +110,13 @@ var styles = StyleSheet.create({
     color: 'black',
     flex: 1.2
   },
+  buy: {
+    fontSize: 18,
+    color: 'black',
+    flex: 1.2,
+    marginTop: 8,
+    fontWeight: 'bold'
+  },
   rewardContainer: {
     flex: 1,
     flexDirection: 'row',
@@ -122,7 +129,7 @@ var styles = StyleSheet.create({
   },
   scrollView: {
     backgroundColor: '#6A85B1',
-    height: 500,
+    height: 600,
     paddingLeft: 5,
     paddingRight: 5,
     marginTop: 0,

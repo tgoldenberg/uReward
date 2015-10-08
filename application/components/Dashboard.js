@@ -1,12 +1,13 @@
-var React = require('react-native');
-var { Icon, } = require('react-native-icons');
-var TasksList = require('./TasksList');
-var TasksEdit = require('./TasksEdit');
-var Payout = require('./Payout');
-var _ = require('underscore');
-var styles = require('./styles');
-var { View, Text, TextInput, TouchableHighlight, ScrollView, AsyncStorage, Image } = React;
+let React = require('react-native');
+let { Icon, } = require('react-native-icons');
+let TasksList = require('./TasksList');
+let TasksEdit = require('./TasksEdit');
+let Payout = require('./Payout');
+let _ = require('underscore');
+let styles = require('./styles');
+let { View, Text, TextInput, TouchableHighlight, ScrollView, AsyncStorage, Image } = React;
 const ITEMS_KEY = '@uReward:items';
+const REWARDS = '@uReward:rewards';
 
 class Dashboard extends React.Component {
   constructor(props){
@@ -17,7 +18,10 @@ class Dashboard extends React.Component {
       date: new Date().toLocaleDateString(),
       today: new Date().toLocaleDateString(),
       total: 0,
-      starsThisWeek: 0
+      starsThisWeek: 0,
+      rewards: [{
+        name: "ice cream", stars: 5, datesPurchased: {}
+      }]
      }
   }
   componentDidMount() {
@@ -67,11 +71,16 @@ class Dashboard extends React.Component {
   }
   async _loadInitialState() {
     let items = await AsyncStorage.getItem(ITEMS_KEY);
+    let rewards = await AsyncStorage.getItem(REWARDS);
     if (items != null) {
       console.log("FOUND ITEMS", items);
       this.setState({items: JSON.parse(items) });
       this.setStarsThisWeek();
       this.setTotal();
+    }
+    if (rewards != null) {
+      console.log("FOUND REWARDS", rewards);
+      this.setState({rewards: JSON.parse(rewards)});
     }
   }
 
@@ -81,6 +90,10 @@ class Dashboard extends React.Component {
     this.setState({items: items});
     this.setStarsThisWeek();
     this.setTotal();
+  }
+
+  createReward(reward) {
+    console.log("CREATE REWARD", reward);
   }
 
   createTask(item) {
@@ -117,7 +130,12 @@ class Dashboard extends React.Component {
     this.props.navigator.push({
       title: 'Payout',
       component: Payout,
-      passProps: {total: total, starsThisWeek: starsThisWeek, username: this.props.username}
+      passProps: {
+        total: total,
+        starsThisWeek: starsThisWeek,
+        username: this.props.username,
+        rewards: this.state.rewards
+      }
     });
   }
   render() {
