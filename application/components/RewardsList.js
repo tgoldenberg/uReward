@@ -90,9 +90,6 @@ var TasksList = React.createClass({
     console.log("PAYOUT", this.props);
     this.props.payout();
   },
-  cancelCreate: function() {
-    this.setState({createMode: false});
-  },
 
   render: function() {
     var self = this;
@@ -168,15 +165,6 @@ var TasksList = React.createClass({
         console.log("NEEDS CHANGES", changes);
         self.props.changeItems(items);
       }
-      var buttonAction;
-      var buttonText;
-      if (! this.state.createMode) {
-        buttonAction = this.payout;
-        buttonText = "Payout";
-      } else {
-        buttonAction = this.cancelCreate;
-        buttonText = "Cancel"
-      }
     return (
       <View>
         <View style={{flexDirection: 'row', height: 100, marginTop: 60}}>
@@ -189,9 +177,9 @@ var TasksList = React.createClass({
                 <View style={styles.payoutButton}>
                 <TouchableHighlight
                   underlayColor="#bbb"
-                  onPress={buttonAction}
+                  onPress={this.payout}
                   style={styles.payoutContainer}>
-                  <Text style={styles.payoutText}>{buttonText}</Text>
+                  <Text style={styles.payoutText}>payout</Text>
                 </TouchableHighlight>
                 </View>
             </View>

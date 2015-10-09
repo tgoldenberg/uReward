@@ -3,9 +3,84 @@ var { Icon, } = require('react-native-icons');
 var styles = require('./styles');
 var { View, Text, StyleSheet, TextInput, TouchableHighlight, ScrollView, PickerIOS, Image, AsyncStorage } = React;
 var _ = require('underscore');
+var PickerItemIOS = PickerIOS.Item;
 
 var Payout = React.createClass({
+  getInitialState: function() {
+    return {
+      createMode: false,
+      inputText: "",
+      selectedNum: 1
+    }
+  },
+  toggleCreateMode: function() {
+    this.setState({createMode: ! this.state.createMode});
+  },
+  handleInputChange: function(e) {
+    this.setState({inputText: e.nativeEvent.text});
+  },
+  selectNum: function(e) {
+    this.setState({selectedNum: e.nativeEvent.newValue});
+  },
+  createNewReward: function() {
+    if (this.state.inputText != "") {
+      var reward = {
+        name: this.state.inputText,
+        stars: this.state.selectedNum,
+        datesPurchased: {}
+      };
+      this.props.createReward(reward);
+      this.setState({createMode: false})
+    }
+  },
+  cancelCreate: function() {
+    this.setState({createMode: false});
+  },
   render: function() {
+    var self = this;
+    var cancelButton;
+    if (this.state.createMode) {
+      cancelButton = <View style={styles.payoutButton}>
+                        <TouchableHighlight
+                          underlayColor="#bbb"
+                          onPress={this.cancelCreate}
+                          style={styles.payoutContainer}>
+                          <Text style={styles.payoutText}>Cancel</Text>
+                        </TouchableHighlight>
+                      </View>
+    } else {
+      cancelButton = <View></View>
+    }
+    var rewardCreateContent;
+    if (this.state.createMode) {
+      rewardCreateContent = <View><View style={styles.createTaskContainer}>
+                            <TextInput style={styles.taskInput} value={this.state.inputText} onChange={this.handleInputChange} placeholder={"Task Name"}/>
+                          </View>
+                          <View style={styles.editTaskContainer}>
+                            <Text style={styles.editTaskText}># of Stars: {this.state.selectedNum}</Text>
+                          </View>
+                          <TouchableHighlight onPress={this.createNewReward}>
+                            <View style={styles.editTaskContainer}>
+                              <Text style={styles.editTaskText}>Create New Reward</Text>
+                            </View>
+                          </TouchableHighlight>
+                          <View>
+                            <PickerIOS selectedValue={this.state.selectedNum} onChange={this.selectNum}>
+                              {[0,1,2,3,4,5,6,7,8,9].map((num) => (
+                                <PickerItemIOS key={num} value={num} label={num.toString()}/>
+                              ))}
+                            </PickerIOS>
+                          </View></View>
+
+    } else {
+      rewardCreateContent = <View>
+                              <View style={styles.editTaskContainer}>
+                                <TouchableHighlight style={styles.editButton} underlayColor="white" onPress={this.toggleCreateMode}>
+                                  <Text style={styles.editTaskText}>Create Reward</Text>
+                                </TouchableHighlight>
+                              </View>
+                            </View>
+    }
     return (
       <View>
         <View style={{flexDirection: 'row', height: 100, marginTop: 60}}>
@@ -15,6 +90,7 @@ var Payout = React.createClass({
               <Text style={{fontSize: 20, marginRight: 10, marginTop: 20, flex: 1, textAlign: 'center'}}>
                 {this.props.username}
               </Text>
+              {cancelButton}
             </View>
           </View>
           <View style={{backgroundColor: '#b4b4b4', flex: 0.5}} >
@@ -46,18 +122,7 @@ var Payout = React.createClass({
               </TouchableHighlight>
             </View>
           })}
-          <View>
-            <View style={styles.editTaskContainer}>
-              <TouchableHighlight style={styles.editButton} underlayColor="#f7f7f7">
-                <Text style={styles.editTaskText}>Edit Tasks</Text>
-              </TouchableHighlight>
-            </View>
-            <View style={styles.editTaskContainer}>
-              <TouchableHighlight style={styles.editButton} underlayColor="#f7f7f7">
-                <Text style={styles.editTaskText}>Create Task</Text>
-              </TouchableHighlight>
-            </View>
-          </View>
+          {rewardCreateContent}
         </ScrollView>
       </View>
     )

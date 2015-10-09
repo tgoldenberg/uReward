@@ -19,9 +19,7 @@ class Dashboard extends React.Component {
       today: new Date().toLocaleDateString(),
       total: 0,
       starsThisWeek: 0,
-      rewards: [{
-        name: "ice cream", stars: 5, datesPurchased: {}
-      }]
+      rewards: []
      }
   }
   componentDidMount() {
@@ -134,10 +132,18 @@ class Dashboard extends React.Component {
         total: total,
         starsThisWeek: starsThisWeek,
         username: this.props.username,
-        rewards: this.state.rewards
+        rewards: this.state.rewards,
+        createReward: this.createReward.bind(this)
       }
     });
   }
+  createReward(reward) {
+    var rewards = this.state.rewards;
+    rewards.push(reward);
+    this.setState({rewards: rewards});
+    AsyncStorage.setItem(REWARDS, JSON.stringify(rewards));
+  }
+
   render() {
     console.log(this.state.items);
 
