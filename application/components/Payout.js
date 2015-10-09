@@ -1,130 +1,93 @@
 var React = require('react-native');
 var { Icon, } = require('react-native-icons');
 var styles = require('./styles');
-var { View, Text, StyleSheet, TextInput, TouchableHighlight, ScrollView, PickerIOS, Image, AsyncStorage } = React;
 var _ = require('underscore');
+var RewardsList = require('./RewardsList');
+var RewardsEdit = require('./RewardsEdit');
+var { View, Text, StyleSheet, TextInput, TouchableHighlight, ScrollView, PickerIOS, Image, AsyncStorage } = React;
 var PickerItemIOS = PickerIOS.Item;
+const REWARDS = '@uReward:rewards';
 
 var Payout = React.createClass({
   getInitialState: function() {
     return {
-      createMode: false,
-      inputText: "",
-      selectedNum: 1
+      edit: false,
+      rewards: []
     }
   },
-  toggleCreateMode: function() {
-    this.setState({createMode: ! this.state.createMode});
-  },
-  handleInputChange: function(e) {
-    this.setState({inputText: e.nativeEvent.text});
-  },
-  selectNum: function(e) {
-    this.setState({selectedNum: e.nativeEvent.newValue});
-  },
-  createNewReward: function() {
-    if (this.state.inputText != "") {
-      var reward = {
-        name: this.state.inputText,
-        stars: this.state.selectedNum,
-        datesPurchased: {}
-      };
-      this.props.createReward(reward);
-      this.setState({createMode: false})
-    }
-  },
-  cancelCreate: function() {
-    this.setState({createMode: false});
-  },
-  render: function() {
-    var self = this;
-    var cancelButton;
-    if (this.state.createMode) {
-      cancelButton = <View style={styles.payoutButton}>
-                        <TouchableHighlight
-                          underlayColor="#bbb"
-                          onPress={this.cancelCreate}
-                          style={styles.payoutContainer}>
-                          <Text style={styles.payoutText}>Cancel</Text>
-                        </TouchableHighlight>
-                      </View>
-    } else {
-      cancelButton = <View></View>
-    }
-    var rewardCreateContent;
-    if (this.state.createMode) {
-      rewardCreateContent = <View><View style={styles.createTaskContainer}>
-                            <TextInput style={styles.taskInput} value={this.state.inputText} onChange={this.handleInputChange} placeholder={"Task Name"}/>
-                          </View>
-                          <View style={styles.editTaskContainer}>
-                            <Text style={styles.editTaskText}># of Stars: {this.state.selectedNum}</Text>
-                          </View>
-                          <TouchableHighlight onPress={this.createNewReward}>
-                            <View style={styles.editTaskContainer}>
-                              <Text style={styles.editTaskText}>Create New Reward</Text>
-                            </View>
-                          </TouchableHighlight>
-                          <View>
-                            <PickerIOS selectedValue={this.state.selectedNum} onChange={this.selectNum}>
-                              {[0,1,2,3,4,5,6,7,8,9].map((num) => (
-                                <PickerItemIOS key={num} value={num} label={num.toString()}/>
-                              ))}
-                            </PickerIOS>
-                          </View></View>
 
+  componentDidMount() {
+    this._loadInitialState().done();
+  },
+
+  async _loadInitialState() {
+    let rewards = await AsyncStorage.getItem(REWARDS);
+    if (rewards != null) {
+      console.log("FOUND REWARDS", rewards);
+      this.setState({rewards: JSON.parse(rewards)});
+    }
+  },
+
+  buyReward: function(reward) {
+    console.log("BUY BUY", reward);
+    console.log("REWARDS", this.state.rewards)
+    var rewards = _.compact(this.state.rewards.map((reward) => {if (reward.deleted == false) return reward;} ));
+    var today = new Date().toLocaleDateString();
+    rewards[reward.id].datesPurchased[today] = new Date().toLocaleTimeString();
+    this.setState({rewards: rewards});
+    AsyncStorage.setItem(REWARDS, JSON.stringify(rewards));
+    this.props.reduceStars(reward.stars);
+  },
+
+  toggleEdit: function() {
+    this.setState({edit: ! this.state.edit});
+  },
+
+  deleteReward: function(id){
+    var rewards = _.compact(this.state.rewards);
+    rewards[id].deleted = true;
+    console.log("NEW REWARDS", rewards);
+    this.setState({rewards: rewards});
+    AsyncStorage.setItem(REWARDS, JSON.stringify(rewards));
+  },
+
+  createReward: function(reward) {
+    var rewards = this.state.rewards;
+    rewards.push(reward);
+    this.setState({rewards: rewards});
+    AsyncStorage.setItem(REWARDS, JSON.stringify(rewards));
+  },
+
+  render: function() {
+    var content;
+    var nonDeletedRewards = this.state.rewards.map((reward, index) => {
+      if (reward.deleted == false) return reward;
+    });
+    if (!this.state.edit) {
+      content = <RewardsList
+                  rewards={_.compact(nonDeletedRewards)}
+                  username={this.props.username}
+                  total={this.props.total}
+                  starsThisWeek={this.props.starsThisWeek}
+                  createReward={this.createReward}
+                  buyReward={this.buyReward}
+                  editRewards={this.props.editRewards}
+                  toggleEdit={this.toggleEdit}
+                  />;
     } else {
-      rewardCreateContent = <View>
-                              <View style={styles.editTaskContainer}>
-                                <TouchableHighlight style={styles.editButton} underlayColor="white" onPress={this.toggleCreateMode}>
-                                  <Text style={styles.editTaskText}>Create Reward</Text>
-                                </TouchableHighlight>
-                              </View>
-                            </View>
+      content = <RewardsEdit
+                  rewards={_.compact(nonDeletedRewards)}
+                  username={this.props.username}
+                  total={this.props.total}
+                  starsThisWeek={this.props.starsThisWeek}
+                  createReward={this.props.createReward}
+                  editRewards={this.props.editRewards}
+                  toggleEdit={this.toggleEdit}
+                  deleteReward={this.deleteReward}
+                  />;
     }
     return (
-      <View>
-        <View style={{flexDirection: 'row', height: 100, marginTop: 60}}>
-          <View style={{backgroundColor: '#e6e6e6', flex: 0.5, flexDirection: 'row'}} >
-            <Icon name='fontawesome|user' size={40} style={styles.facebook} color='black'/>
-            <View style={{flexDirection: 'column', alignItems: 'stretch', flex: 1}}>
-              <Text style={{fontSize: 20, marginRight: 10, marginTop: 20, flex: 1, textAlign: 'center'}}>
-                {this.props.username}
-              </Text>
-              {cancelButton}
-            </View>
-          </View>
-          <View style={{backgroundColor: '#b4b4b4', flex: 0.5}} >
-            <Text style={{flex: 2, padding: 15, fontSize: 18, backgroundColor: '#a7a7a7' }}>
-              Stars This Week: {this.props.starsThisWeek}
-            </Text>
-            <Text style={{flex: 1, padding: 15, fontSize: 18 }}>
-              Total Stars: {this.props.total}
-            </Text>
-          </View>
-        </View>
-        <View style={{flexDirection: 'row', height: 70}}>
-          <View style={{backgroundColor: '#f7f7f7', flex: 1, flexDirection: 'row'}} >
-            <Text style={{fontSize: 20, marginTop: 20, textAlign: 'center', flex: 8}}>Rewards</Text>
-          </View>
-        </View>
-        <ScrollView style={styles.scrollView} contentInset={{bottom:0}} automaticallyAdjustContentInsets={false}>
-          {this.props.rewards.map((reward, idx) => {
-            return <View style={styles.rewardContainer} key={idx} ref={`item${idx}`}>
-              <View style={styles.starContainer}>
-                <Text style={styles.starText}>{reward.stars}</Text>
-                <Icon name='fontawesome|star-o' size={40} style={styles.star} color='#6A85B1'/>
-              </View>
-
-              <Text style={styles.reward}>{reward.name}</Text>
-              <Text style={styles.buy}>BUY</Text>
-              <TouchableHighlight>
-                <Icon name='fontawesome|check-square-o' size={30} style={styles.rewardIcons} color='#6A85B1'/>
-              </TouchableHighlight>
-            </View>
-          })}
-          {rewardCreateContent}
-        </ScrollView>
-      </View>
+      <View>{content}</View>
     )
   }
 })

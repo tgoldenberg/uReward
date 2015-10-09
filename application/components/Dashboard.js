@@ -7,7 +7,6 @@ let _ = require('underscore');
 let styles = require('./styles');
 let { View, Text, TextInput, TouchableHighlight, ScrollView, AsyncStorage, Image } = React;
 const ITEMS_KEY = '@uReward:items';
-const REWARDS = '@uReward:rewards';
 
 class Dashboard extends React.Component {
   constructor(props){
@@ -36,6 +35,7 @@ class Dashboard extends React.Component {
     });
 
     this.setState({total: totalStars});
+    return totalStars;
   }
 
   setStarsThisWeek() {
@@ -65,20 +65,16 @@ class Dashboard extends React.Component {
         }
       })
     });
-    this.setState({starsThisWeek: starsThisWeek })
+    this.setState({starsThisWeek: starsThisWeek });
+    return starsThisWeek;
   }
   async _loadInitialState() {
     let items = await AsyncStorage.getItem(ITEMS_KEY);
-    let rewards = await AsyncStorage.getItem(REWARDS);
     if (items != null) {
       console.log("FOUND ITEMS", items);
       this.setState({items: JSON.parse(items) });
       this.setStarsThisWeek();
       this.setTotal();
-    }
-    if (rewards != null) {
-      console.log("FOUND REWARDS", rewards);
-      this.setState({rewards: JSON.parse(rewards)});
     }
   }
 
@@ -88,10 +84,6 @@ class Dashboard extends React.Component {
     this.setState({items: items});
     this.setStarsThisWeek();
     this.setTotal();
-  }
-
-  createReward(reward) {
-    console.log("CREATE REWARD", reward);
   }
 
   createTask(item) {
@@ -121,10 +113,47 @@ class Dashboard extends React.Component {
     console.log("NEW DATE", date);
     this.setState({date: date.toLocaleDateString()});
   }
+
+  reduceStars(stars) {
+    console.log("NUM OF STARS", stars);
+    var items = _.compact(this.state.items);
+    var count = stars;
+    items.forEach((item, index) => {
+      console.log("BUY REWARD", item);
+      var keys = _.keys(item.datesStarred);
+      keys.forEach((key) => {
+        while (item.datesStarred[key] > 0 && count > 0 ) {
+          item.datesStarred[key] -= 1;
+          count -= 1;
+        }
+      });
+    });
+    console.log("FINAL REWARDS", items);
+    this.setState({items: items});
+    AsyncStorage.setItem(ITEMS_KEY, JSON.stringify(items));
+    var starsThisWeek = this.setStarsThisWeek();
+    var total = this.setTotal();
+    this.props.navigator.replace({
+      title: 'Payout',
+      component: Payout,
+      passProps: {
+        total: total,
+        starsThisWeek: starsThisWeek,
+        username: this.props.username,
+        reduceStars: this.reduceStars.bind(this)
+      }
+    })
+  }
+
   payout() {
     console.log("CHANGE ROUTE TO PAYOUT")
     var starsThisWeek = this.state.starsThisWeek;
     var total = this.state.total;
+    var nonDeletedRewards = this.state.rewards.map((reward, index) => {
+      if (!reward.deleted) {
+        return reward;
+      }
+    });
     this.props.navigator.push({
       title: 'Payout',
       component: Payout,
@@ -132,16 +161,9 @@ class Dashboard extends React.Component {
         total: total,
         starsThisWeek: starsThisWeek,
         username: this.props.username,
-        rewards: this.state.rewards,
-        createReward: this.createReward.bind(this)
+        reduceStars: this.reduceStars.bind(this)
       }
     });
-  }
-  createReward(reward) {
-    var rewards = this.state.rewards;
-    rewards.push(reward);
-    this.setState({rewards: rewards});
-    AsyncStorage.setItem(REWARDS, JSON.stringify(rewards));
   }
 
   render() {

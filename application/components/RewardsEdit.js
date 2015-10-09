@@ -16,16 +16,16 @@ var {
 } = React;
 
 var RewardsEdit = React.createClass({
-  deleteTask: function(id) {
+  deleteReward: function(id) {
     console.log("DELETE REWARD", id);
-    this.props.deleteTask(id);
+    this.props.deleteReward(id);
   },
 
   render: function() {
     var self = this;
     var rewards = _.compact(this.props.rewards);
     var rewards = rewards.map(function(reward, idx){
-      var boundDelete = self.deleteTask.bind(null, idx);
+      var boundDelete = self.deleteReward.bind(null, idx);
       console.log("PROPS", self.props);
       return  <View style={styles.rewardContainer} key={idx}>
                 <TouchableHighlight underlayColor="transparent" onPress={boundDelete}>
