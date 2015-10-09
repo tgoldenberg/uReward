@@ -1,6 +1,6 @@
 'use strict';
-let Register = require('./application/components/signup/Register');
-const React = require('react-native');
+let Register  = require('./application/components/signup/Register');
+const React   = require('react-native');
 let { AppRegistry, NavigatorIOS, StyleSheet, Text, View } = React;
 
 class uReward extends React.Component{

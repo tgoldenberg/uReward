@@ -1,12 +1,12 @@
-let React = require('react-native');
-let { Icon, } = require('react-native-icons');
-let TasksList = require('./tasks/TasksList');
-let TasksEdit = require('./tasks/TasksEdit');
-let Payout = require('./rewards/Payout');
-let _ = require('underscore');
-let styles = require('./styles');
-let { View, Text, TextInput, TouchableHighlight, ScrollView, AsyncStorage, Image } = React;
-const ITEMS_KEY = '@uReward:items';
+const ITEMS_KEY   = '@uReward:items';
+const React       = require('react-native');
+let { Icon, }     = require('react-native-icons');
+let TasksList     = require('./tasks/TasksList');
+let TasksEdit     = require('./tasks/TasksEdit');
+let Payout        = require('./rewards/Payout');
+let _             = require('underscore');
+let styles        = require('./styles');
+let { View, Text, TextInput, TouchableHighlight, ScrollView, AsyncStorage, Image, } = React;
 
 class Dashboard extends React.Component {
   constructor(props){
@@ -18,37 +18,38 @@ class Dashboard extends React.Component {
       today: new Date().toLocaleDateString(),
       total: 0,
       starsThisWeek: 0,
-      rewards: []
      }
   }
   componentDidMount() {
     this._loadInitialState().done();
   }
-
+  async _loadInitialState() {
+    let items = await AsyncStorage.getItem(ITEMS_KEY);
+    if (items != null) {
+      // console.log("FOUND ITEMS", items);
+      this.setState({items: JSON.parse(items) });
+      this.setStarsThisWeek();
+      this.setTotal();
+    }
+  }
   setTotal() {
-    var totalStars = 0;
-    this.state.items.forEach(function(item){
+    let totalStars = 0;
+    this.state.items.forEach((item) => {
       var keys = _.keys(item.datesStarred);
-      keys.forEach(function(key){
-        totalStars += item.datesStarred[key];
-      });
+      keys.forEach((key) => { totalStars += item.datesStarred[key]; });
     });
-
     this.setState({total: totalStars});
     return totalStars;
   }
-
   setStarsThisWeek() {
-    var starsThisWeek = 0;
-    var today = new Date();
-    var sunday;
-    if (today.getDay() == 0) {
+    let starsThisWeek = 0, sunday;
+    let today = new Date();
+    let day = today.getDay();
+    if (day == 0)
       sunday = today;
-    } else {
-      var days = today.getDay();
-      sunday = new Date(today - 24*60*60*1000*days);
-    }
-    var week = [
+    else
+      sunday = new Date(today - 24*60*60*1000*day);
+    let week = [
       sunday.toLocaleDateString(),
       new Date(new Date(sunday).valueOf() + 24*60*60*1000*1).toLocaleDateString(),
       new Date(new Date(sunday).valueOf() + 24*60*60*1000*2).toLocaleDateString(),
@@ -57,29 +58,19 @@ class Dashboard extends React.Component {
       new Date(new Date(sunday).valueOf() + 24*60*60*1000*5).toLocaleDateString(),
       new Date(new Date(sunday).valueOf() + 24*60*60*1000*6).toLocaleDateString(),
     ]
-    console.log("WEEK", week);
-    this.state.items.forEach(function(item) {
-      week.forEach(function(day){
-        if (item.datesStarred[day] != null) {
+    // console.log("WEEK", week);
+    this.state.items.forEach((item) => {
+      week.forEach((day) => {
+        if (item.datesStarred[day] != null)
           starsThisWeek += item.datesStarred[day];
-        }
-      })
+      });
     });
     this.setState({starsThisWeek: starsThisWeek });
     return starsThisWeek;
   }
-  async _loadInitialState() {
-    let items = await AsyncStorage.getItem(ITEMS_KEY);
-    if (items != null) {
-      console.log("FOUND ITEMS", items);
-      this.setState({items: JSON.parse(items) });
-      this.setStarsThisWeek();
-      this.setTotal();
-    }
-  }
 
   changeItems(items) {
-    console.log(items[0].datesStarred)
+    // console.log(items[0].datesStarred)
     AsyncStorage.setItem(ITEMS_KEY, JSON.stringify(items));
     this.setState({items: items});
     this.setStarsThisWeek();
@@ -96,30 +87,24 @@ class Dashboard extends React.Component {
   }
 
   toggleEdit() {
-    var {edit} = this.state;
-    this.setState({edit: !edit});
-    console.log("TOGGLE EDIT MODE", this.state.edit);
+    this.setState({edit: !this.state.edit});
   }
 
   deleteTask(id) {
     var items = _.compact(this.state.items);
     items[id].deleted = true;
-    console.log("NEW ITEMS", items);
     this.setState({items: items});
     AsyncStorage.setItem(ITEMS_KEY, JSON.stringify(items));
   }
 
   changeDate(date) {
-    console.log("NEW DATE", date);
     this.setState({date: date.toLocaleDateString()});
   }
 
   reduceStars(stars) {
-    console.log("NUM OF STARS", stars);
     var items = _.compact(this.state.items);
     var count = stars;
     items.forEach((item, index) => {
-      console.log("BUY REWARD", item);
       var keys = _.keys(item.datesStarred);
       keys.forEach((key) => {
         while (item.datesStarred[key] > 0 && count > 0 ) {
@@ -128,7 +113,6 @@ class Dashboard extends React.Component {
         }
       });
     });
-    console.log("FINAL REWARDS", items);
     this.setState({items: items});
     AsyncStorage.setItem(ITEMS_KEY, JSON.stringify(items));
     var starsThisWeek = this.setStarsThisWeek();
@@ -142,18 +126,13 @@ class Dashboard extends React.Component {
         username: this.props.username,
         reduceStars: this.reduceStars.bind(this)
       }
-    })
+    });
   }
 
   payout() {
-    console.log("CHANGE ROUTE TO PAYOUT")
-    var starsThisWeek = this.state.starsThisWeek;
-    var total = this.state.total;
-    var nonDeletedRewards = this.state.rewards.map((reward, index) => {
-      if (!reward.deleted) {
-        return reward;
-      }
-    });
+    let starsThisWeek = this.state.starsThisWeek;
+    let total = this.state.total;
+
     this.props.navigator.push({
       title: 'Payout',
       component: Payout,
@@ -167,11 +146,10 @@ class Dashboard extends React.Component {
   }
 
   render() {
-    console.log(this.state.items);
-
     let myContent;
-    var renderedItems = this.state.items.map(function(item) {
-      if (item.deleted == false) { return item; }
+    let renderedItems = this.state.items.map((item) => {
+      if (item.deleted == false)
+        return item;
     });
     if (this.state.edit) {
       myContent = <TasksEdit
