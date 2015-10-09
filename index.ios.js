@@ -1,26 +1,10 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- */
 'use strict';
-var Register = require('./application/components/signup/Register');
-var React = require('react-native');
-var {
-  AppRegistry,
-  NavigatorIOS,
-  StyleSheet,
-  Text,
-  View
-} = React;
+let Register = require('./application/components/signup/Register');
+const React = require('react-native');
+let { AppRegistry, NavigatorIOS, StyleSheet, Text, View } = React;
 
-var styles = StyleSheet.create({
-  navigator: {
-    flex: 1
-  }
-});
-
-var uReward = React.createClass({
-  render: function() {
+class uReward extends React.Component{
+  render() {
     return (
       <NavigatorIOS
         style={styles.navigator}
@@ -31,7 +15,12 @@ var uReward = React.createClass({
       />
     );
   }
-});
+};
 
+var styles = StyleSheet.create({
+  navigator: {
+    flex: 1
+  }
+});
 
 AppRegistry.registerComponent('uReward', () => uReward);
