@@ -1,7 +1,7 @@
 var _ = require('underscore');
 var React = require('react-native');
 var { Icon, } = require('react-native-icons');
-var styles = require('./styles');
+var styles = require('../styles');
 var _ = require('underscore');
 
 var {

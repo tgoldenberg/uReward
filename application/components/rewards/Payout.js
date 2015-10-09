@@ -1,6 +1,6 @@
 var React = require('react-native');
 var { Icon, } = require('react-native-icons');
-var styles = require('./styles');
+var styles = require('../styles');
 var _ = require('underscore');
 var RewardsList = require('./RewardsList');
 var RewardsEdit = require('./RewardsEdit');

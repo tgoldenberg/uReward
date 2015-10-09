@@ -3,7 +3,7 @@
  * https://github.com/facebook/react-native
  */
 'use strict';
-var Register = require('./application/components/Register');
+var Register = require('./application/components/signup/Register');
 var React = require('react-native');
 var {
   AppRegistry,

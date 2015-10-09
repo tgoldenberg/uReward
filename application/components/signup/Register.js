@@ -1,6 +1,6 @@
 var React = require('react-native');
-var Dashboard = require('./Dashboard');
-var styles = require('./styles');
+var Dashboard = require('../Dashboard');
+var styles = require('../styles');
 var USERNAME_KEY = '@uReward:username';
 var { AsyncStorage, Text, TextInput, TouchableHighlight, View } = React;
 

@@ -1,8 +1,8 @@
 let React = require('react-native');
 let { Icon, } = require('react-native-icons');
-let TasksList = require('./TasksList');
-let TasksEdit = require('./TasksEdit');
-let Payout = require('./Payout');
+let TasksList = require('./tasks/TasksList');
+let TasksEdit = require('./tasks/TasksEdit');
+let Payout = require('./rewards/Payout');
 let _ = require('underscore');
 let styles = require('./styles');
 let { View, Text, TextInput, TouchableHighlight, ScrollView, AsyncStorage, Image } = React;

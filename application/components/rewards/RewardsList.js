@@ -1,15 +1,14 @@
 var React = require('react-native');
 var { Icon, } = require('react-native-icons');
-var TasksEdit = require('./TasksEdit');
 var Payout = require('./Payout');
-var styles = require('./styles');
+var styles = require('../styles');
 var { View, Text, StyleSheet, TextInput, TouchableHighlight, ScrollView, PickerIOS, Image, AsyncStorage } = React;
 var PickerItemIOS = PickerIOS.Item;
 var _ = require('underscore');
 const ITEMS_KEY = '@uReward:items';
 
 
-var TasksList = React.createClass({
+var RewardsList = React.createClass({
   getInitialState: function() {
     return {
       inputText: "",
@@ -148,4 +147,4 @@ var TasksList = React.createClass({
   }
 });
 
-module.exports = TasksList;
+module.exports = RewardsList;

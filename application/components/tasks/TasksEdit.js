@@ -1,7 +1,7 @@
 var _ = require('underscore');
 var React = require('react-native');
 var { Icon, } = require('react-native-icons');
-var styles = require('./styles');
+var styles = require('../styles');
 var _ = require('underscore');
 
 var {
@@ -53,7 +53,16 @@ var TasksEdit = React.createClass({
         <View style={{flexDirection: 'row', height: 100, marginTop: 60}}>
           <View style={{backgroundColor: '#e6e6e6', flex: 0.5, flexDirection: 'row'}} >
             <Icon name='fontawesome|user' size={40} style={styles.facebook} color='black'/>
-            <Text style={{fontSize: 20, marginLeft: 10, marginTop: 20, flex: 2}}>Hello World!</Text>
+            <View style={{flexDirection: 'column', alignItems: 'stretch', flex: 1}}>
+            <Text style={{fontSize: 20, marginRight: 10, marginTop: 20, flex: 1, textAlign: 'center'}}>{this.props.username}</Text>
+            <View style={styles.payoutButton}>
+            <TouchableHighlight
+              underlayColor="#bbb"
+              style={styles.payoutContainer}>
+              <Text style={styles.payoutText}>Payout</Text>
+            </TouchableHighlight>
+            </View>
+          </View>
           </View>
           <View style={{backgroundColor: '#b4b4b4', flex: 0.5}} >
             <Text style={{flex: 2, padding: 15, fontSize: 18, backgroundColor: '#a7a7a7' }}>Stars This Week: {this.props.starsThisWeek}</Text>
