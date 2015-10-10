@@ -68,8 +68,9 @@ var RewardsList = React.createClass({
       rewardCreateContent = <View><View style={styles.createTaskContainer}>
                             <TextInput style={styles.taskInput} value={this.state.inputText} onChange={this.handleInputChange} placeholder={"Task Name"}/>
                           </View>
-                          <View style={styles.editTaskContainer}>
-                            <Text style={styles.editTaskText}># of Stars: {this.state.selectedNum}</Text>
+                          <View style={styles.starsSelectContainer}>
+                            <Text style={styles.selectStarText}># of Stars: {this.state.selectedNum}</Text>
+                            <Icon name='fontawesome|star-o' size={40} style={styles.star} color='white'/>
                           </View>
                           <TouchableHighlight onPress={this.createNewReward}>
                             <View style={styles.editTaskContainer}>
@@ -91,7 +92,7 @@ var RewardsList = React.createClass({
                                   <Text style={styles.editTaskText}>Edit Rewards</Text>
                                 </TouchableHighlight>
                               </View>
-                              <View style={styles.editTaskContainer}>
+                                <View style={styles.editTaskContainer}>
                                 <TouchableHighlight style={styles.editButton} underlayColor="white" onPress={this.toggleCreateMode}>
                                   <Text style={styles.editTaskText}>Create Reward</Text>
                                 </TouchableHighlight>

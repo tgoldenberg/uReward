@@ -91,8 +91,12 @@ class Dashboard extends React.Component {
   }
 
   deleteTask(id) {
-    var items = _.compact(this.state.items);
+    console.log("DELETE", id);
+    var items = _.compact(this.state.items.map((item) => {
+      if (! item.deleted) {return item; }
+    }));
     items[id].deleted = true;
+
     this.setState({items: items});
     AsyncStorage.setItem(ITEMS_KEY, JSON.stringify(items));
   }

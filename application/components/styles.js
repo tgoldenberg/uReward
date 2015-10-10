@@ -92,7 +92,7 @@ var styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'white',
     borderRadius: 8,
-    color: 'black'
+    color: 'white'
   },
   buttonText: {
     fontSize: 23,
@@ -188,6 +188,11 @@ var styles = StyleSheet.create({
     fontSize: 15,
     marginTop: 6
   },
+  starFull: {
+    width: 40,
+    height: 40,
+    color: 'yellow'
+  },
   star: {
     width: 40,
     height: 40,
@@ -202,7 +207,8 @@ var styles = StyleSheet.create({
     left: 10,
     top: 12,
     width: 20,
-    textAlign: 'center'
+    textAlign: 'center',
+    backgroundColor: 'transparent'
   },
   createTaskContainer: {
     flex: 1,
@@ -216,6 +222,16 @@ var styles = StyleSheet.create({
   addStars: {
     flex: 1
   },
+  starsSelectContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderColor: 'black',
+    marginTop: 4,
+    borderRadius: 3,
+    backgroundColor: "#6A85B1"
+  },
   editTaskContainer: {
     flex: 1,
     flexDirection: 'row',
@@ -226,6 +242,11 @@ var styles = StyleSheet.create({
     marginTop: 4,
     borderRadius: 3,
     backgroundColor: "white"
+  },
+  selectStarText: {
+    fontSize: 20,
+    color: 'white',
+    padding: 10
   },
   editTaskText: {
     fontSize: 20,

@@ -102,11 +102,13 @@ var TasksList = React.createClass({
       taskCreateContent = <View><View style={styles.createTaskContainer}>
                             <TextInput style={styles.taskInput} value={this.state.inputText} onChange={this.handleInputChange} placeholder={"Task Name"}/>
                           </View>
-                          <View style={styles.editTaskContainer}>
-                            <Text style={styles.editTaskText}># of Stars: {this.state.selectedNum}</Text>
+                          <View style={styles.starsSelectContainer}>
+                            <Text style={styles.selectStarText}># of Stars: {this.state.selectedNum}</Text>
+                            <Icon name='fontawesome|star-o' size={40} style={styles.star} color='white'/>
                           </View>
                           <TouchableHighlight onPress={this.createNewTask}>
                             <View style={styles.editTaskContainer}>
+
                               <Text style={styles.editTaskText}>Create New Task</Text>
                             </View>
                           </TouchableHighlight>
@@ -145,11 +147,12 @@ var TasksList = React.createClass({
       var todayStars = item.datesStarred[today] ? item.datesStarred[today] : 0;
       var boundAddStar        =  self.addStar.bind(null, idx);
       var boundDecreaseStar   =  self.decreaseStar.bind(null, idx);
-      var boundAddAllStars    =  self.addAllStars.bind(null, idx)
+      var boundAddAllStars    =  self.addAllStars.bind(null, idx);
+      var starBackground      =  todayStars > 0 ? "yellow" : "white"
       return  <View style={styles.rewardContainer} key={idx} ref={`item${idx}`}>
                 <View style={styles.starContainer}>
+                  <Icon name='fontawesome|star' size={40} style={styles.starFull} color={starBackground}/>
                   <Text style={styles.starText}>{todayStars}</Text>
-                  <Icon name='fontawesome|star-o' size={40} style={styles.star} color='#6A85B1'/>
                 </View>
                 <TouchableHighlight onPress={boundDecreaseStar}>
                   <Icon name='fontawesome|minus-square' size={30} style={styles.smallRewardIcons} color='#6A85B1' />
