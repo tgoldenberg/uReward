@@ -10,6 +10,20 @@ var styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: '#6A85B1'
   },
+  mainTitle: {
+    fontSize: 25,
+    textAlign: 'center',
+    color: '#fff',
+    marginBottom: 10,
+    fontWeight: 'bold',
+    letterSpacing: 1
+  },
+  searchButtonText: {
+    fontSize: 25,
+    color: '#444',
+    alignSelf: 'center',
+    fontWeight: 'bold'
+  },
   payoutContainer: {
     paddingBottom: 10,
     paddingRight: 15,
@@ -81,12 +95,12 @@ var styles = StyleSheet.create({
     color: 'black'
   },
   buttonText: {
-    fontSize: 18,
-    color: '#111',
+    fontSize: 23,
+    color: '#f2f2f2',
     alignSelf: 'center'
   },
   button: {
-    height: 45,
+    height: 60,
     flexDirection: 'row',
     backgroundColor: 'white',
     borderColor: 'white',
