@@ -1,8 +1,8 @@
-var _ = require('underscore');
-var React = require('react-native');
-var { Icon, } = require('react-native-icons');
-var styles = require('../styles');
-var _ = require('underscore');
+const _               = require('underscore');
+const React           = require('react-native');
+let { Icon, }         = require('react-native-icons');
+let styles            = require('../styles');
+let Colors            = require('../colors');
 
 var {
   View,
@@ -33,15 +33,17 @@ var TasksEdit = React.createClass({
       if (text.length == 23) {
         text += "...";
       }
+
       var boundDelete = self.deleteTask.bind(null, idx);
+      let starBackground =  reward.datesStarred[self.props.date] > 0 ? Colors.yellow : "white"
       console.log("PROPS", self.props);
       return  <View style={styles.rewardContainer} key={idx}>
                 <TouchableHighlight underlayColor="transparent" onPress={boundDelete}>
                   <Icon name='fontawesome|times' size={30} style={styles.times} color='#777'/>
                 </TouchableHighlight>
                 <View style={styles.starContainer}>
+                  <Icon name='fontawesome|star' size={40} style={styles.star} color={starBackground}/>
                   <Text style={styles.starText}>{reward.datesStarred[self.props.date]}</Text>
-                  <Icon name='fontawesome|star-o' size={40} style={styles.star} color='#6A85B1'/>
                 </View>
                 <Text style={styles.reward}>{text}</Text>
                 <Text style={styles.rewardStars}>({reward.stars} stars)</Text>
@@ -64,15 +66,15 @@ var TasksEdit = React.createClass({
               </View>
             </View>
           </View>
-          <View style={{backgroundColor: '#b4b4b4', flex: 0.5}} >
-            <Text style={{flex: 2, padding: 15, fontSize: 18, backgroundColor: '#a7a7a7' }}>Stars This Week: {this.props.starsThisWeek}</Text>
-            <Text style={{flex: 1, padding: 15, fontSize: 18 }}>Total Stars: {this.props.total}</Text>
+          <View style={{backgroundColor: '#888', flex: 0.5}} >
+            <Text style={{color: 'white', flex: 1, padding: 15, fontSize: 18, backgroundColor: '#999' }}>Stars This Week: {this.props.starsThisWeek}</Text>
+            <Text style={{color: 'white', flex: 1, padding: 15, fontSize: 18 }}>Total Stars: {this.props.total}</Text>
           </View>
         </View>
         <View style={{flexDirection: 'row', height: 70}}>
           <View style={{backgroundColor: '#f7f7f7', flex: 1, flexDirection: 'row'}} >
             <Icon name='fontawesome|angle-left' size={40} style={styles.calendarSigns} color='black'/>
-            <Text style={{fontSize: 20, marginTop: 20, textAlign: 'center', flex: 8}}>Today {today}</Text>
+            <Text style={{fontSize: 20, marginTop: 20, textAlign: 'center', flex: 8}}>{today}</Text>
             <Icon name='fontawesome|angle-right' size={40} style={styles.calendarSigns} color='black'/>
           </View>
         </View>

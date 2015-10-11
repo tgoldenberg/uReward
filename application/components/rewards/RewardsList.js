@@ -2,6 +2,7 @@ var React = require('react-native');
 var { Icon, } = require('react-native-icons');
 var Payout = require('./Payout');
 var styles = require('../styles');
+let Colors = require('../colors');
 var { View, Text, StyleSheet, TextInput, TouchableHighlight, ScrollView, PickerIOS, Image, AsyncStorage } = React;
 var PickerItemIOS = PickerIOS.Item;
 var _ = require('underscore');
@@ -70,7 +71,7 @@ var RewardsList = React.createClass({
                           </View>
                           <View style={styles.starsSelectContainer}>
                             <Text style={styles.selectStarText}># of Stars: {this.state.selectedNum}</Text>
-                            <Icon name='fontawesome|star-o' size={40} style={styles.star} color='white'/>
+                            <Icon name='fontawesome|star' size={40} style={styles.star} color={Colors.yellow}/>
                           </View>
                           <TouchableHighlight onPress={this.createNewReward}>
                             <View style={styles.editTaskContainer}>
@@ -111,11 +112,11 @@ var RewardsList = React.createClass({
               {cancelButton}
             </View>
           </View>
-          <View style={{backgroundColor: '#b4b4b4', flex: 0.5}} >
-            <Text style={{flex: 2, padding: 15, fontSize: 18, backgroundColor: '#a7a7a7' }}>
+          <View style={{backgroundColor: '#888', flex: 0.5}} >
+            <Text style={{color: 'white', flex: 1, padding: 15, fontSize: 18, backgroundColor: '#999' }}>
               Stars This Week: {this.props.starsThisWeek}
             </Text>
-            <Text style={{flex: 1, padding: 15, fontSize: 18 }}>
+            <Text style={{color: 'white', flex: 1, padding: 15, fontSize: 18 }}>
               Total Stars: {this.props.total}
             </Text>
           </View>
@@ -130,14 +131,14 @@ var RewardsList = React.createClass({
             var boundBuyReward = this.buyReward.bind(this, {id: idx, stars: reward.stars});
             return <View style={styles.rewardContainer} key={idx} ref={`item${idx}`}>
               <View style={styles.starContainer}>
+                <Icon name='fontawesome|star' size={40} style={styles.star} color={Colors.yellow}/>
                 <Text style={styles.starText}>{reward.stars}</Text>
-                <Icon name='fontawesome|star-o' size={40} style={styles.star} color='#6A85B1'/>
               </View>
 
               <Text style={styles.reward}>{reward.name}</Text>
               <Text style={styles.buy}>BUY</Text>
               <TouchableHighlight onPress={boundBuyReward}>
-                <Icon name='fontawesome|check-square-o' size={30} style={styles.rewardIcons} color='#6A85B1'/>
+                <Icon name='fontawesome|check-square-o' size={30} style={styles.rewardIcons} color={Colors.blue}/>
               </TouchableHighlight>
             </View>
           })}

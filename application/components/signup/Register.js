@@ -1,5 +1,6 @@
 const USERNAME_KEY  = '@uReward:username';
 const React         = require('react-native');
+let Colors          = require('../colors');
 let Dashboard       = require('../Dashboard');
 let styles          = require('../styles');
 let { AsyncStorage, Text, TextInput, TouchableHighlight, View } = React;
@@ -14,7 +15,7 @@ class Register extends React.Component{
   }
   async _loadInitialState() {
     let username = await AsyncStorage.getItem(USERNAME_KEY);
-    if (username != null) {
+    if (username != null ) {
       this.setState({username: username, storedName: username});
       this.props.navigator.push({
         title: 'Dashboard',
@@ -29,11 +30,13 @@ class Register extends React.Component{
   handlePress() {
     AsyncStorage.setItem(USERNAME_KEY, this.state.username);
     this.setState({storedName: this.state.username});
-    this.props.navigator.push({
-      title: 'Dashboard',
-      component: Dashboard,
-      passProps: {username: this.state.username}
-    });
+    if (this.state.username != "") {
+      this.props.navigator.push({
+        title: 'Dashboard',
+        component: Dashboard,
+        passProps: {username: this.state.username}
+      });
+    }
   }
   render() {
     return (
@@ -47,7 +50,7 @@ class Register extends React.Component{
          />
         <TouchableHighlight
           style={styles.button}
-          underlayColor="white"
+          underlayColor={Colors.lightBlue}
           onPress={this.handlePress.bind(this)}>
           <Text style={styles.searchButtonText}> SIGNUP </Text>
         </TouchableHighlight>

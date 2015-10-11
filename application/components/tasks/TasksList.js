@@ -1,25 +1,40 @@
-var React = require('react-native');
-var { Icon, } = require('react-native-icons');
-var TasksEdit = require('./TasksEdit');
-var Payout = require('../rewards/Payout');
-var styles = require('../styles');
-var { View, Text, StyleSheet, TextInput, TouchableHighlight, ScrollView, PickerIOS, Image, AsyncStorage } = React;
-var PickerItemIOS = PickerIOS.Item;
-var _ = require('underscore');
-const ITEMS_KEY = '@uReward:items';
+const ITEMS_KEY       = '@uReward:items';
+const React           = require('react-native');
+const Colors          = require('../colors');
+let { Icon, }         = require('react-native-icons');
+let TasksEdit         = require('./TasksEdit');
+let Payout            = require('../rewards/Payout');
+let styles            = require('../styles');
+let _                 = require('underscore');
 
+let {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  TouchableHighlight,
+  ScrollView,
+  PickerIOS,
+  Image,
+  AsyncStorage
+} = React;
+let PickerItemIOS = PickerIOS.Item;
 
 var TasksList = React.createClass({
   getInitialState: function() {
-    return {inputText: "", createMode: false, selectedNum: 1};
+    return {
+      inputText: "",
+      createMode: false,
+      selectedNum: 1
+    };
   },
   componentDidUpdate: function() {
     this.setDefaultStars();
   },
   setDefaultStars: function() {
-    var self = this;
-    var items = _.compact(this.props.items);
-    var changes = 0;
+    let self = this;
+    let items = _.compact(this.props.items);
+    let changes = 0;
     items.forEach(function(item, idx){
       let today = self.props.date;
       if (item.datesStarred[today] == null) {
@@ -27,143 +42,137 @@ var TasksList = React.createClass({
         changes += 1;
       }
     });
-    if (changes > 0) {
-      console.log("NEEDS CHANGES", changes);
+    if (changes > 0)
       self.props.changeItems(items);
-    }
   },
   handleInputChange: function(e) {
-    // TODO: change inputText state
     this.setState({inputText: e.nativeEvent.text});
   },
   addStar: function(e) {
-    console.log("ADD STAR", this.props);
-    var {items, date} = this.props;
+    let {items, date} = this.props;
     items[e].datesStarred[date] += 1;
-    console.log(items[e].datesStarred);
     this.props.changeItems(items);
   },
   toggleCreateMode: function() {
     this.setState({createMode: !this.state.createMode});
   },
   decreaseStar: function(e) {
-    console.log("DECREASE STAR", this.props);
-    var {items, date} = this.props;
+    let {items, date} = this.props;
     if (items[e].datesStarred[date] > 0) {
       items[e].datesStarred[date] -= 1;
-      console.log(items[e].datesStarred);
       this.props.changeItems(items);
     }
-
   },
   createNewTask: function() {
-    console.log("CREATE TASK");
+    // console.log("CREATE TASK");
     if (this.state.inputText != "") {
-      var {inputText, selectedNum} = this.state;
-      this.props.createTask({name: inputText, stars: selectedNum, datesStarred: {}});
+      let {inputText, selectedNum} = this.state;
+      this.props.createTask({
+        name: inputText,
+        stars: selectedNum,
+        datesStarred: {}
+      });
     }
     this.setState({createMode: false})
   },
   addAllStars: function(e) {
-    console.log("ADD ALL STARS", this.props);
-    var {items, date} = this.props;
+    // console.log("ADD ALL STARS", this.props);
+    let {items, date} = this.props;
     items[e].datesStarred[date] += items[e].stars;
-    console.log(items[e].datesStarred);
     this.props.changeItems(items);
   },
-
   prevDate: function() {
-    var date = new Date(this.props.date).valueOf();
-    var prevDate = new Date(date - 24*60*60*1000);
+    let date = new Date(this.props.date).valueOf();
+    let prevDate = new Date(date - 24*60*60*1000);
     this.props.changeDate(prevDate);
   },
   nextDate: function() {
-    var date = new Date(this.props.date).valueOf();
-    var nextDate = new Date(date + 24*60*60*1000);
+    let date = new Date(this.props.date).valueOf();
+    let nextDate = new Date(date + 24*60*60*1000);
     this.props.changeDate(nextDate);
   },
   selectNum: function(e) {
     this.setState({selectedNum: e.nativeEvent.newValue});
   },
-
   payout: function() {
-    console.log("PAYOUT", this.props);
+    // console.log("PAYOUT", this.props);
     this.props.payout();
   },
   cancelCreate: function() {
     this.setState({createMode: false});
   },
-
   render: function() {
-    var self = this;
-    var isToday = this.props.date == new Date().toLocaleDateString() ? "Today " : "";
-    var taskCreateContent;
+    let self = this;
+    let isToday = this.props.date == new Date().toLocaleDateString() ? "Today " : "";
+    let taskCreateContent;
     if (this.state.createMode) {
-      taskCreateContent = <View><View style={styles.createTaskContainer}>
+      taskCreateContent = <View style={styles.pickerMainContainer}><View style={styles.createTaskContainer}>
                             <TextInput style={styles.taskInput} value={this.state.inputText} onChange={this.handleInputChange} placeholder={"Task Name"}/>
                           </View>
                           <View style={styles.starsSelectContainer}>
                             <Text style={styles.selectStarText}># of Stars: {this.state.selectedNum}</Text>
-                            <Icon name='fontawesome|star-o' size={40} style={styles.star} color='white'/>
+                            <Icon name='fontawesome|star' size={40} style={styles.star} color={Colors.yellow}/>
                           </View>
-                          <TouchableHighlight onPress={this.createNewTask}>
-                            <View style={styles.editTaskContainer}>
-
+                            <TouchableHighlight
+                              onPress={this.createNewTask}
+                              underlayColor={Colors.lightBlue}
+                              style={styles.editTaskContainer}
+                              >
                               <Text style={styles.editTaskText}>Create New Task</Text>
-                            </View>
-                          </TouchableHighlight>
-                          <View>
-                            <PickerIOS selectedValue={this.state.selectedNum} onChange={this.selectNum}>
+                            </TouchableHighlight>
+                          <View style={styles.pickerContainer}>
+                            <PickerIOS style={styles.pickerIOS} selectedValue={this.state.selectedNum} onChange={this.selectNum}>
                               {[0,1,2,3,4,5,6,7,8,9].map((num) => (
-                                <PickerItemIOS key={num} value={num} label={num.toString()}/>
+                                <PickerItemIOS style={styles.pickerItem} key={num} value={num} label={num.toString()}/>
                               ))}
                             </PickerIOS>
                           </View></View>
     } else {
-      taskCreateContent = <View>
-                            <View style={styles.editTaskContainer}>
-                              <TouchableHighlight style={styles.editButton} underlayColor="white" onPress={this.props.toggleEdit}>
-                                <Text style={styles.editTaskText}>Edit Tasks</Text>
-                              </TouchableHighlight>
-                            </View>
-                            <View style={styles.editTaskContainer}>
-                              <TouchableHighlight style={styles.editButton} underlayColor="white" onPress={this.toggleCreateMode}>
-                                <Text style={styles.editTaskText}>Create Task</Text>
-                              </TouchableHighlight>
-                            </View>
+      taskCreateContent = <View style={styles.editButtonsContainer}>
+                            <TouchableHighlight
+                              style={styles.editTaskContainer}
+                              underlayColor={Colors.lightBlue}
+                              onPress={this.props.toggleEdit}>
+                              <Text style={styles.editTaskText}>Edit Tasks</Text>
+                            </TouchableHighlight>
+                            <TouchableHighlight
+                              style={styles.editTaskContainer}
+                              underlayColor={Colors.lightBlue}
+                              onPress={this.toggleCreateMode}>
+                              <Text style={styles.editTaskText}>Create Task</Text>
+                            </TouchableHighlight>
                           </View>
     }
-    var items = _.compact(this.props.items);
-    var changes = 0;
-    var rewards = items.map(function(item, idx){
-      var text = item.name ? item.name.substring(0,23): "";
+    let items = _.compact(this.props.items);
+    let changes = 0;
+    let rewards = items.map(function(item, idx){
+      let text = item.name ? item.name.substring(0,23): "";
       if (text.length == 23) { text += "..."; }
       let today = self.props.date;
-      var todayStars = 0;
-      console.log("THIS DATE", item.datesStarred[today]);
+      let todayStars = 0;
+      // console.log("THIS DATE", item.datesStarred[today]);
       if (item.datesStarred[today] != null) {
         todayStars = item.datesStarred[today];
       }
-      var todayStars = item.datesStarred[today] ? item.datesStarred[today] : 0;
-      var boundAddStar        =  self.addStar.bind(null, idx);
-      var boundDecreaseStar   =  self.decreaseStar.bind(null, idx);
-      var boundAddAllStars    =  self.addAllStars.bind(null, idx);
-      var starBackground      =  todayStars > 0 ? "yellow" : "white"
+      let boundAddStar        =  self.addStar.bind(null, idx);
+      let boundDecreaseStar   =  self.decreaseStar.bind(null, idx);
+      let boundAddAllStars    =  self.addAllStars.bind(null, idx);
+      let starBackground      =  todayStars > 0 ? Colors.yellow : "white"
       return  <View style={styles.rewardContainer} key={idx} ref={`item${idx}`}>
                 <View style={styles.starContainer}>
                   <Icon name='fontawesome|star' size={40} style={styles.starFull} color={starBackground}/>
                   <Text style={styles.starText}>{todayStars}</Text>
                 </View>
                 <TouchableHighlight onPress={boundDecreaseStar}>
-                  <Icon name='fontawesome|minus-square' size={30} style={styles.smallRewardIcons} color='#6A85B1' />
+                  <Icon name='fontawesome|minus-square' size={30} style={styles.smallRewardIcons} color={Colors.blue} />
                 </TouchableHighlight>
                 <TouchableHighlight onPress={boundAddStar}>
-                  <Icon name='fontawesome|plus-square' size={30} style={styles.smallRewardIcons} color='#6A85B1' />
+                  <Icon name='fontawesome|plus-square' size={30} style={styles.smallRewardIcons} color={Colors.blue} />
                 </TouchableHighlight>
                 <Text style={styles.reward}>{text}</Text>
                 <Text style={styles.rewardStars}>({item.stars} stars)</Text>
                 <TouchableHighlight onPress={boundAddAllStars}>
-                  <Icon name='fontawesome|check-square-o' size={30} style={styles.rewardIcons} color='#6A85B1'/>
+                  <Icon name='fontawesome|check-square-o' size={30} style={styles.rewardIcons} color={Colors.blue}/>
                 </TouchableHighlight>
               </View>;
       });
@@ -190,20 +199,20 @@ var TasksList = React.createClass({
                 {this.props.username}
               </Text>
                 <View style={styles.payoutButton}>
-                <TouchableHighlight
-                  underlayColor="#bbb"
-                  onPress={buttonAction}
-                  style={styles.payoutContainer}>
-                  <Text style={styles.payoutText}>{buttonText}</Text>
-                </TouchableHighlight>
+                  <TouchableHighlight
+                    underlayColor={Colors.lightBlue}
+                    onPress={buttonAction}
+                    style={styles.payoutContainer}>
+                    <Text style={styles.payoutText}>{buttonText}</Text>
+                  </TouchableHighlight>
                 </View>
             </View>
           </View>
-          <View style={{backgroundColor: '#b4b4b4', flex: 0.5}} >
-            <Text style={{flex: 2, padding: 15, fontSize: 18, backgroundColor: '#a7a7a7' }}>
+          <View style={{backgroundColor: '#888', flex: 0.5}} >
+            <Text style={{color: 'white', flex: 2, padding: 15, fontSize: 18, backgroundColor: '#999' }}>
               Stars This Week: {this.props.starsThisWeek}
             </Text>
-            <Text style={{flex: 1, padding: 15, fontSize: 18 }}>
+            <Text style={{color: 'white', flex: 2, padding: 15, fontSize: 18 }}>
               Total Stars: {this.props.total}
             </Text>
           </View>

@@ -1,4 +1,5 @@
 const ITEMS_KEY   = '@uReward:items';
+const TOTAL       = '@uReward:total';
 const React       = require('react-native');
 let { Icon, }     = require('react-native-icons');
 let TasksList     = require('./tasks/TasksList');
@@ -119,8 +120,8 @@ class Dashboard extends React.Component {
     });
     this.setState({items: items});
     AsyncStorage.setItem(ITEMS_KEY, JSON.stringify(items));
-    var starsThisWeek = this.setStarsThisWeek();
-    var total = this.setTotal();
+    let starsThisWeek = this.setStarsThisWeek();
+    let total = this.setTotal();
     this.props.navigator.replace({
       title: 'Payout',
       component: Payout,

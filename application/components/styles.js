@@ -1,4 +1,5 @@
 var React = require('react-native');
+var Colors = require('./colors');
 var { StyleSheet } = React;
 
 var styles = StyleSheet.create({
@@ -8,7 +9,7 @@ var styles = StyleSheet.create({
     marginTop: 65,
     flexDirection: 'column',
     justifyContent: 'center',
-    backgroundColor: '#6A85B1'
+    backgroundColor: Colors.mediumBlue
   },
   mainTitle: {
     fontSize: 25,
@@ -20,7 +21,7 @@ var styles = StyleSheet.create({
   },
   searchButtonText: {
     fontSize: 25,
-    color: '#444',
+    color: 'white',
     alignSelf: 'center',
     fontWeight: 'bold'
   },
@@ -33,7 +34,7 @@ var styles = StyleSheet.create({
     backgroundColor: 'transparent'
   },
   payoutButton: {
-    backgroundColor: '#6A85B1',
+    backgroundColor: Colors.blue,
     borderRadius: 5,
     marginBottom: 10,
     marginRight: 15,
@@ -79,9 +80,10 @@ var styles = StyleSheet.create({
     marginRight: 5,
     fontSize: 23,
     borderWidth: 1,
-    borderColor: 'white',
+    borderColor: '#b4b4b4',
     borderRadius: 8,
-    color: 'white'
+    color: 'white',
+    backgroundColor: Colors.lightBlue
   },
   taskInput: {
     height: 50,
@@ -96,14 +98,14 @@ var styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 23,
-    color: '#f2f2f2',
+    color: 'white',
     alignSelf: 'center'
   },
   button: {
     height: 60,
     flexDirection: 'row',
-    backgroundColor: 'white',
-    borderColor: 'white',
+    backgroundColor: Colors.blue,
+    borderColor: Colors.lightBlue,
     borderWidth: 1,
     borderRadius: 8,
     marginBottom: 10,
@@ -142,7 +144,7 @@ var styles = StyleSheet.create({
 
   },
   scrollView: {
-    backgroundColor: '#6A85B1',
+    backgroundColor: Colors.mediumBlue,
     height: 600,
     paddingLeft: 5,
     paddingRight: 5,
@@ -160,7 +162,7 @@ var styles = StyleSheet.create({
     width: 70,
     height: 80,
     margin: 10,
-    backgroundColor: '#6A85B1',
+    backgroundColor: Colors.regularBlue,
     borderRadius: 2
   },
   calendarSigns: {
@@ -214,10 +216,28 @@ var styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'center',
-    backgroundColor: '#6A85B1',
+    backgroundColor: Colors.mediumBlue,
     padding: 10,
     marginTop: 4,
     borderRadius: 3
+  },
+  pickerMainContainer: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    padding: 20
+  },
+  pickerContainer: {
+    flexDirection: 'row',
+    alignItems: 'stretch',
+  },
+  pickerIOS: {
+    flex: 1,
+    textAlign: 'center',
+    marginTop: 10
+  },
+  pickerItem: {
+    color: 'white'
   },
   addStars: {
     flex: 1
@@ -230,7 +250,7 @@ var styles = StyleSheet.create({
     borderColor: 'black',
     marginTop: 4,
     borderRadius: 3,
-    backgroundColor: "#6A85B1"
+    backgroundColor: Colors.mediumBlue
   },
   editTaskContainer: {
     flex: 1,
@@ -240,8 +260,10 @@ var styles = StyleSheet.create({
     padding: 10,
     borderColor: 'black',
     marginTop: 4,
-    borderRadius: 3,
-    backgroundColor: "white"
+    borderWidth: 1,
+    borderColor: Colors.lightBlue,
+    borderRadius: 8,
+    backgroundColor: Colors.blue
   },
   selectStarText: {
     fontSize: 20,
@@ -250,8 +272,11 @@ var styles = StyleSheet.create({
   },
   editTaskText: {
     fontSize: 20,
-    color: 'black',
+    color: 'white',
     padding: 10
+  },
+  editButtonsContainer: {
+    marginTop: 5,
   },
   editButton: {
     alignSelf: 'stretch',
