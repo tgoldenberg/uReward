@@ -136,7 +136,7 @@ var RewardsList = React.createClass({
 
               <Text style={styles.reward}>{reward.name}</Text>
               <Text style={styles.buy}>BUY</Text>
-              <TouchableHighlight onPress={boundBuyReward}>
+              <TouchableHighlight onPress={boundBuyReward} underlayColor={Colors.lightBlue}>
                 <Icon name='fontawesome|check-square-o' size={30} style={styles.rewardIcons} color={Colors.green}/>
               </TouchableHighlight>
             </View>

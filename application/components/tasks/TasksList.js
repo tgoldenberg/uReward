@@ -50,18 +50,18 @@ var TasksList = React.createClass({
     this.setState({inputText: e.nativeEvent.text});
   },
   addStar: function(e) {
-    let {items, date} = this.props;
+    let {items, date, total} = this.props;
     items[e].datesStarred[date] += 1;
-    this.props.changeItems(items);
+    this.props.changeTotal(items, total+1);
   },
   toggleCreateMode: function() {
     this.setState({createMode: !this.state.createMode});
   },
   decreaseStar: function(e) {
-    let {items, date} = this.props;
+    let {items, date, total} = this.props;
     if (items[e].datesStarred[date] > 0) {
       items[e].datesStarred[date] -= 1;
-      this.props.changeItems(items);
+      this.props.changeTotal(items, total-1);
     }
   },
   createNewTask: function() {
@@ -78,9 +78,9 @@ var TasksList = React.createClass({
   },
   addAllStars: function(e) {
     // console.log("ADD ALL STARS", this.props);
-    let {items, date} = this.props;
+    let {items, date, total} = this.props;
     items[e].datesStarred[date] += items[e].stars;
-    this.props.changeItems(items);
+    this.props.changeTotal(items, total+=items[e].stars);
   },
   prevDate: function() {
     let date = new Date(this.props.date).valueOf();

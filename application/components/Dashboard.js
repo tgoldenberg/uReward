@@ -26,22 +26,27 @@ class Dashboard extends React.Component {
   }
   async _loadInitialState() {
     let items = await AsyncStorage.getItem(ITEMS_KEY);
+    let total = await AsyncStorage.getItem(TOTAL);
     if (items != null) {
       // console.log("FOUND ITEMS", items);
       this.setState({items: JSON.parse(items) });
       this.setStarsThisWeek();
-      this.setTotal();
+      // this.setTotal();
+    }
+    if (total != null) {
+      console.log("FOUND TOTAL", total);
+      this.setState({total: parseInt(total)})
     }
   }
-  setTotal() {
-    let totalStars = 0;
-    this.state.items.forEach((item) => {
-      var keys = _.keys(item.datesStarred);
-      keys.forEach((key) => { totalStars += item.datesStarred[key]; });
-    });
-    this.setState({total: totalStars});
-    return totalStars;
-  }
+  // setTotal() {
+  //   let totalStars = 0;
+  //   this.state.items.forEach((item) => {
+  //     var keys = _.keys(item.datesStarred);
+  //     keys.forEach((key) => { totalStars += item.datesStarred[key]; });
+  //   });
+  //   this.setState({total: totalStars});
+  //   return totalStars;
+  // }
   setStarsThisWeek() {
     let starsThisWeek = 0, sunday;
     let today = new Date();
@@ -70,12 +75,22 @@ class Dashboard extends React.Component {
     return starsThisWeek;
   }
 
+  changeTotal(items, total){
+    // console.log(items[0].datesStarred)
+    AsyncStorage.setItem(ITEMS_KEY, JSON.stringify(items));
+    AsyncStorage.setItem(TOTAL, total.toString());
+    this.setState({
+      items: items,
+      total: total
+    });
+    this.setStarsThisWeek();
+  }
+
   changeItems(items) {
     // console.log(items[0].datesStarred)
     AsyncStorage.setItem(ITEMS_KEY, JSON.stringify(items));
     this.setState({items: items});
     this.setStarsThisWeek();
-    this.setTotal();
   }
 
   createTask(item) {
@@ -107,21 +122,24 @@ class Dashboard extends React.Component {
   }
 
   reduceStars(stars) {
-    var items = _.compact(this.state.items);
-    var count = stars;
-    items.forEach((item, index) => {
-      var keys = _.keys(item.datesStarred);
-      keys.forEach((key) => {
-        while (item.datesStarred[key] > 0 && count > 0 ) {
-          item.datesStarred[key] -= 1;
-          count -= 1;
-        }
-      });
-    });
-    this.setState({items: items});
-    AsyncStorage.setItem(ITEMS_KEY, JSON.stringify(items));
-    let starsThisWeek = this.setStarsThisWeek();
-    let total = this.setTotal();
+    // var items = _.compact(this.state.items);
+    // var count = stars;
+    // items.forEach((item, index) => {
+    //   var keys = _.keys(item.datesStarred);
+    //   keys.forEach((key) => {
+    //     while (item.datesStarred[key] > 0 && count > 0 ) {
+    //       item.datesStarred[key] -= 1;
+    //       count -= 1;
+    //     }
+    //   });
+    // });
+    // this.setState({items: items});
+    // AsyncStorage.setItem(ITEMS_KEY, JSON.stringify(items));
+    let {total, starsThisWeek} = this.state;
+    total -= stars;
+    AsyncStorage.setItem(TOTAL, total.toString());
+    this.setState({total: total});
+
     this.props.navigator.replace({
       title: 'Payout',
       component: Payout,
@@ -135,9 +153,7 @@ class Dashboard extends React.Component {
   }
 
   payout() {
-    let starsThisWeek = this.state.starsThisWeek;
-    let total = this.state.total;
-
+    let { starsThisWeek, total} = this.state;
     this.props.navigator.push({
       title: 'Payout',
       component: Payout,
@@ -174,6 +190,7 @@ class Dashboard extends React.Component {
                   toggleEdit={this.toggleEdit.bind(this)}
                   createTask={this.createTask.bind(this)}
                   changeItems={this.changeItems.bind(this)}
+                  changeTotal={this.changeTotal.bind(this)}
                   total={this.state.total}
                   payout={this.payout.bind(this)}
                   starsThisWeek={this.state.starsThisWeek}
