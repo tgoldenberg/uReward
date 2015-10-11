@@ -31,7 +31,10 @@ var RewardsList = React.createClass({
     this.setState({inputText: e.nativeEvent.text});
   },
   selectNum: function(e) {
-    this.setState({selectedNum: e.nativeEvent.newValue});
+    this.setState({
+      selectedNum: e.nativeEvent.newIndex+1,
+      selectedPicker: e.nativeEvent.newValue
+    });
   },
   createNewReward: function() {
     if (this.state.inputText != "") {
@@ -77,10 +80,10 @@ var RewardsList = React.createClass({
                               <TouchableHighlight style={styles.editTaskContainer} onPress={this.createNewReward} underlayColor={Colors.lightBlue}>
                                 <Text style={styles.editTaskText}>Create New Reward</Text>
                               </TouchableHighlight>
-                              <View>
-                                <PickerIOS selectedValue={this.state.selectedNum} onChange={this.selectNum}>
-                                  {[0,1,2,3,4,5,6,7,8,9].map((num) => (
-                                    <PickerItemIOS key={num} value={num} label={num.toString()}/>
+                              <View style={styles.pickerContainer}>
+                                <PickerIOS style={styles.rewardsPickerIOS} selectedValue={this.state.selectedPicker} onChange={this.selectNum}>
+                                  {["1 star","2 stars","3 stars","4 stars","5 stars","6 stars","7 stars","8 stars","9 stars"].map((num) => (
+                                    <PickerItemIOS style={styles.pickerItem} color={"white"} key={num} value={num} label={num.toString()}/>
                                   ))}
                                 </PickerIOS>
                               </View>
@@ -134,7 +137,7 @@ var RewardsList = React.createClass({
               <Text style={styles.reward}>{reward.name}</Text>
               <Text style={styles.buy}>BUY</Text>
               <TouchableHighlight onPress={boundBuyReward}>
-                <Icon name='fontawesome|check-square-o' size={30} style={styles.rewardIcons} color={Colors.blue}/>
+                <Icon name='fontawesome|check-square-o' size={30} style={styles.rewardIcons} color={Colors.green}/>
               </TouchableHighlight>
             </View>
           })}

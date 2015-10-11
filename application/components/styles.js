@@ -233,18 +233,32 @@ var styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
+    alignItems: 'stretch',
     padding: 20
   },
   pickerContainer: {
     flexDirection: 'row',
     alignItems: 'stretch',
+    paddingLeft: 10,
   },
   pickerIOS: {
     flex: 1,
-    marginTop: 10
+    flexDirection: 'column',
+    justifyContent: 'center',
+    marginTop: 10,
+    alignItems: 'stretch',
+    marginLeft: 10,
+  },
+  rewardsPickerIOS: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    marginTop: 10,
+    alignItems: 'stretch',
+    marginLeft: 30,
   },
   pickerItem: {
-    color: 'white'
+
   },
   addStars: {
     flex: 1
