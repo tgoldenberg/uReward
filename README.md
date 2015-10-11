@@ -2,11 +2,11 @@
 React-native reward app for iOS
 ***
 #Login
-![screenshot](https://raw.githubusercontent.com/tgoldenberg/uReward/master/ureward3.png=100x20)
+![screenshot](https://raw.githubusercontent.com/tgoldenberg/uReward/master/ureward3.png)
 ***
 #Tasks
-![screenshot](https://raw.githubusercontent.com/tgoldenberg/uReward/master/ureward2.png=100x20)
+![screenshot](https://raw.githubusercontent.com/tgoldenberg/uReward/master/ureward2.png)
 ***
 #Rewards
-![screenshot](https://raw.githubusercontent.com/tgoldenberg/uReward/master/ureward1.png=100x20)
+![screenshot](https://raw.githubusercontent.com/tgoldenberg/uReward/master/ureward1.png)
 ***
