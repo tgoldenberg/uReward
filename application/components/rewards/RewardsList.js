@@ -1,11 +1,13 @@
-var React = require('react-native');
-var { Icon, } = require('react-native-icons');
-var Payout = require('./Payout');
-var styles = require('../styles');
+const React = require('react-native');
+const { Icon, } = require('react-native-icons');
+let Payout = require('./Payout');
+let styles = require('../styles');
 let Colors = require('../colors');
-var { View, Text, StyleSheet, TextInput, TouchableHighlight, ScrollView, PickerIOS, Image, AsyncStorage } = React;
-var PickerItemIOS = PickerIOS.Item;
-var _ = require('underscore');
+let { View, Text, StyleSheet, TextInput, TouchableHighlight, ScrollView, PickerIOS, Image, AsyncStorage } = React;
+let PickerItemIOS = PickerIOS.Item;
+let _ = require('underscore');
+let TaskPicker = require('../taskPicker');
+
 const ITEMS_KEY = '@uReward:items';
 
 
@@ -45,7 +47,12 @@ var RewardsList = React.createClass({
         datesPurchased: {}
       };
       this.props.createReward(reward);
-      this.setState({createMode: false})
+      this.setState({
+        createMode: false,
+        inputText: "",
+        selectedNum: 1,
+        selectedPicker: "1 star"
+      })
     }
   },
   cancelCreate: function() {
@@ -58,7 +65,7 @@ var RewardsList = React.createClass({
     if (this.state.createMode) {
       cancelButton = <View style={styles.payoutButton}>
                         <TouchableHighlight
-                          underlayColor="#bbb"
+                          underlayColor={Colors.lightBlue}
                           onPress={this.cancelCreate}
                           style={styles.payoutContainer}>
                           <Text style={styles.payoutText}>Cancel</Text>
@@ -82,7 +89,7 @@ var RewardsList = React.createClass({
                               </TouchableHighlight>
                               <View style={styles.pickerContainer}>
                                 <PickerIOS style={styles.rewardsPickerIOS} selectedValue={this.state.selectedPicker} onChange={this.selectNum}>
-                                  {["1 star","2 stars","3 stars","4 stars","5 stars","6 stars","7 stars","8 stars","9 stars"].map((num) => (
+                                  {TaskPicker.map((num) => (
                                     <PickerItemIOS style={styles.pickerItem} color={"white"} key={num} value={num} label={num.toString()}/>
                                   ))}
                                 </PickerIOS>

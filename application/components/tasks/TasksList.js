@@ -6,7 +6,7 @@ let TasksEdit         = require('./TasksEdit');
 let Payout            = require('../rewards/Payout');
 let styles            = require('../styles');
 let _                 = require('underscore');
-
+let TaskPicker        = require('../taskPicker');
 let {
   View,
   Text,
@@ -77,7 +77,12 @@ var TasksList = React.createClass({
         datesStarred: {}
       });
     }
-    this.setState({createMode: false})
+    this.setState({
+      createMode: false,
+      inputText: "",
+      selectedNum: 1,
+      selectedPicker: "1 star"
+    })
   },
   addAllStars: function(e) {
     // console.log("ADD ALL STARS", this.props);
@@ -130,7 +135,7 @@ var TasksList = React.createClass({
                             </TouchableHighlight>
                           <View style={styles.pickerContainer}>
                             <PickerIOS style={styles.pickerIOS} selectedValue={this.state.selectedPicker} onChange={this.selectNum}>
-                              {["1 star","2 stars","3 stars","4 stars","5 stars","6 stars","7 stars","8 stars","9 stars"].map((num) => (
+                              {TaskPicker.map((num) => (
                                 <PickerItemIOS style={styles.pickerItem} color={"white"} key={num} value={num} label={num.toString()}/>
                               ))}
                             </PickerIOS>

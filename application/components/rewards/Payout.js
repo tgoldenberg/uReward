@@ -44,7 +44,10 @@ var Payout = React.createClass({
   },
 
   deleteReward: function(id){
-    var rewards = _.compact(this.state.rewards);
+    var rewards = _.compact(this.state.rewards.map((reward,index)=> {
+      if (reward.deleted != true)
+        return reward;
+    }));
     rewards[id].deleted = true;
     console.log("NEW REWARDS", rewards);
     this.setState({rewards: rewards});
