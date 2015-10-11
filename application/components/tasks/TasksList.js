@@ -10,7 +10,8 @@ let _                 = require('underscore');
 let {
   View,
   Text,
-  StyleSheet,
+  Animated,
+  Easing,
   TextInput,
   TouchableHighlight,
   ScrollView,
@@ -26,9 +27,10 @@ var TasksList = React.createClass({
       inputText: "",
       createMode: false,
       selectedNum: 1,
-      selectedPicker: "1 star"
+      selectedPicker: "1 star",
     };
   },
+
   componentDidUpdate: function() {
     this.setDefaultStars();
   },
@@ -82,6 +84,7 @@ var TasksList = React.createClass({
     let {items, date, total} = this.props;
     items[e].datesStarred[date] += items[e].stars;
     this.props.changeTotal(items, total+=items[e].stars);
+
   },
   prevDate: function() {
     let date = new Date(this.props.date).valueOf();
@@ -161,11 +164,16 @@ var TasksList = React.createClass({
       }
       let boundAddStar        =  self.addStar.bind(null, idx);
       let boundDecreaseStar   =  self.decreaseStar.bind(null, idx);
-      let boundAddAllStars    =  self.addAllStars.bind(null, idx);
+      let boundAddAllStars    =  self.addAllStars.bind(this, idx);
       let starBackground      =  todayStars > 0 ? Colors.yellow : "white"
+      console.log("BOUNCE VALUE", self.state.bounceValue);
       return  <View style={styles.rewardContainer} key={idx} ref={`item${idx}`}>
                 <View style={styles.starContainer}>
-                  <Icon name='fontawesome|star' size={40} style={styles.starFull} color={starBackground}/>
+                  <Icon
+                    name='fontawesome|star'
+                    size={30}
+                    style={styles.starFull}
+                    color={starBackground}/>
                   <Text style={styles.starText}>{todayStars}</Text>
                 </View>
                 <TouchableHighlight onPress={boundDecreaseStar} style={styles.rewardIconButton} underlayColor={Colors.lightBlue}>
