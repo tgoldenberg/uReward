@@ -66,38 +66,34 @@ var RewardsList = React.createClass({
     }
     var rewardCreateContent;
     if (this.state.createMode) {
-      rewardCreateContent = <View><View style={styles.createTaskContainer}>
-                            <TextInput style={styles.taskInput} value={this.state.inputText} onChange={this.handleInputChange} placeholder={"Task Name"}/>
-                          </View>
-                          <View style={styles.starsSelectContainer}>
-                            <Text style={styles.selectStarText}># of Stars: {this.state.selectedNum}</Text>
-                            <Icon name='fontawesome|star' size={40} style={styles.star} color={Colors.yellow}/>
-                          </View>
-                          <TouchableHighlight onPress={this.createNewReward}>
-                            <View style={styles.editTaskContainer}>
-                              <Text style={styles.editTaskText}>Create New Reward</Text>
+      rewardCreateContent = <View>
+                              <View style={styles.createTaskContainer}>
+                                <TextInput style={styles.taskInput} value={this.state.inputText} onChange={this.handleInputChange} placeholder={"Task Name"}/>
+                              </View>
+                              <View style={styles.starsSelectContainer}>
+                                <Text style={styles.selectStarText}># of Stars: {this.state.selectedNum}</Text>
+                                <Icon name='fontawesome|star' size={40} style={styles.star} color={Colors.yellow}/>
+                              </View>
+                              <TouchableHighlight style={styles.editTaskContainer} onPress={this.createNewReward} underlayColor={Colors.lightBlue}>
+                                <Text style={styles.editTaskText}>Create New Reward</Text>
+                              </TouchableHighlight>
+                              <View>
+                                <PickerIOS selectedValue={this.state.selectedNum} onChange={this.selectNum}>
+                                  {[0,1,2,3,4,5,6,7,8,9].map((num) => (
+                                    <PickerItemIOS key={num} value={num} label={num.toString()}/>
+                                  ))}
+                                </PickerIOS>
+                              </View>
                             </View>
-                          </TouchableHighlight>
-                          <View>
-                            <PickerIOS selectedValue={this.state.selectedNum} onChange={this.selectNum}>
-                              {[0,1,2,3,4,5,6,7,8,9].map((num) => (
-                                <PickerItemIOS key={num} value={num} label={num.toString()}/>
-                              ))}
-                            </PickerIOS>
-                          </View></View>
 
     } else {
       rewardCreateContent = <View>
-                              <View style={styles.editTaskContainer}>
-                                <TouchableHighlight style={styles.editButton} underlayColor="white" onPress={this.props.toggleEdit}>
-                                  <Text style={styles.editTaskText}>Edit Rewards</Text>
-                                </TouchableHighlight>
-                              </View>
-                                <View style={styles.editTaskContainer}>
-                                <TouchableHighlight style={styles.editButton} underlayColor="white" onPress={this.toggleCreateMode}>
-                                  <Text style={styles.editTaskText}>Create Reward</Text>
-                                </TouchableHighlight>
-                              </View>
+                              <TouchableHighlight style={styles.editTaskContainer} underlayColor={Colors.lightBlue} onPress={this.props.toggleEdit}>
+                                <Text style={styles.editTaskText}>Edit Rewards</Text>
+                              </TouchableHighlight>
+                              <TouchableHighlight style={styles.editTaskContainer} underlayColor={Colors.lightBlue} onPress={this.toggleCreateMode}>
+                                <Text style={styles.editTaskText}>Create Reward</Text>
+                              </TouchableHighlight>
                             </View>
     }
     return (

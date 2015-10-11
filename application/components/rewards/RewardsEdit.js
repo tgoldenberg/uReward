@@ -29,7 +29,7 @@ var RewardsEdit = React.createClass({
       var boundDelete = self.deleteReward.bind(null, idx);
       console.log("PROPS", self.props);
       return  <View style={styles.rewardContainer} key={idx}>
-                <TouchableHighlight underlayColor="transparent" onPress={boundDelete}>
+                <TouchableHighlight underlayColor="#d6d6d6" onPress={boundDelete}>
                   <Icon name='fontawesome|times' size={30} style={styles.times} color={Colors.blue}/>
                 </TouchableHighlight>
                 <View style={styles.starContainer}>
@@ -55,11 +55,9 @@ var RewardsEdit = React.createClass({
           </View>
         </View>
         <ScrollView style={styles.scrollView} contentInset={{bottom:49}} automaticallyAdjustContentInsets={false}>
-          <View style={styles.editTaskContainer}>
-            <TouchableHighlight style={styles.editButton} underlayColor="white" onPress={this.props.toggleEdit}>
-              <Text style={styles.editTaskText}>Done</Text>
-            </TouchableHighlight>
-          </View>
+          <TouchableHighlight style={styles.editTaskContainer} underlayColor={Colors.lightBlue} onPress={this.props.toggleEdit}>
+            <Text style={styles.editTaskText}>Done</Text>
+          </TouchableHighlight>
           {rewards}
         </ScrollView>
       </View>

@@ -6,7 +6,7 @@ COLORS = {
   darkOrange: '#E67300',
   lightOrange: '#EB8F33',
   regularBlue: '#6A85B1',
-  yellow: 'yellow',
+  yellow: '#FFFF19',
 }
 
 module.exports = COLORS;

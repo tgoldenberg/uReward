@@ -163,16 +163,16 @@ var TasksList = React.createClass({
                   <Icon name='fontawesome|star' size={40} style={styles.starFull} color={starBackground}/>
                   <Text style={styles.starText}>{todayStars}</Text>
                 </View>
-                <TouchableHighlight onPress={boundDecreaseStar}>
+                <TouchableHighlight onPress={boundDecreaseStar} style={styles.rewardIconButton} underlayColor={Colors.lightBlue}>
                   <Icon name='fontawesome|minus-square' size={30} style={styles.smallRewardIcons} color={Colors.blue} />
                 </TouchableHighlight>
-                <TouchableHighlight onPress={boundAddStar}>
+                <TouchableHighlight onPress={boundAddStar} style={styles.rewardIconButton} underlayColor={Colors.lightBlue}>
                   <Icon name='fontawesome|plus-square' size={30} style={styles.smallRewardIcons} color={Colors.blue} />
                 </TouchableHighlight>
                 <Text style={styles.reward}>{text}</Text>
                 <Text style={styles.rewardStars}>({item.stars} stars)</Text>
-                <TouchableHighlight onPress={boundAddAllStars}>
-                  <Icon name='fontawesome|check-square-o' size={30} style={styles.rewardIcons} color={Colors.blue}/>
+                <TouchableHighlight onPress={boundAddAllStars} style={styles.rewardIconButton} underlayColor={Colors.lightBlue}>
+                  <Icon name='fontawesome|check-square-o' size={30} style={styles.smallRewardIcons} color={Colors.blue}/>
                 </TouchableHighlight>
               </View>;
       });

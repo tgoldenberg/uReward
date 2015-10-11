@@ -36,9 +36,9 @@ var TasksEdit = React.createClass({
 
       var boundDelete = self.deleteTask.bind(null, idx);
       let starBackground =  reward.datesStarred[self.props.date] > 0 ? Colors.yellow : "white"
-      console.log("PROPS", self.props);
+      // console.log("PROPS", self.props);
       return  <View style={styles.rewardContainer} key={idx}>
-                <TouchableHighlight underlayColor="transparent" onPress={boundDelete}>
+                <TouchableHighlight underlayColor="#d6d6d6" onPress={boundDelete}>
                   <Icon name='fontawesome|times' size={30} style={styles.times} color='#777'/>
                 </TouchableHighlight>
                 <View style={styles.starContainer}>
@@ -59,7 +59,7 @@ var TasksEdit = React.createClass({
               <Text style={{fontSize: 20, marginRight: 10, marginTop: 20, flex: 1, textAlign: 'center'}}>{this.props.username}</Text>
               <View style={styles.payoutButton}>
                 <TouchableHighlight
-                  underlayColor="#bbb"
+                  underlayColor={Colors.lightBlue}
                   style={styles.payoutContainer}>
                   <Text style={styles.payoutText}>Payout</Text>
                 </TouchableHighlight>
@@ -79,11 +79,9 @@ var TasksEdit = React.createClass({
           </View>
         </View>
         <ScrollView style={styles.scrollView} contentInset={{bottom:49}} automaticallyAdjustContentInsets={false}>
-          <View style={styles.editTaskContainer}>
-            <TouchableHighlight style={styles.editButton} underlayColor="white" onPress={this.props.toggleEdit}>
-              <Text style={styles.editTaskText}>Done</Text>
-            </TouchableHighlight>
-          </View>
+          <TouchableHighlight style={styles.editTaskContainer} underlayColor={Colors.lightBlue} onPress={this.props.toggleEdit}>
+            <Text style={styles.editTaskText}>Done</Text>
+          </TouchableHighlight>
           {rewards}
         </ScrollView>
       </View>

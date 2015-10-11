@@ -181,7 +181,15 @@ var styles = StyleSheet.create({
     flex: .7,
     width: 30,
     height: 30,
-    marginTop: 6
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'transparent'
+  },
+  rewardIconButton: {
+    backgroundColor: 'transparent',
+    marginTop: 4,
+    height: 30,
+    width: 30,
   },
   times: {
     flex: .7,
@@ -233,7 +241,6 @@ var styles = StyleSheet.create({
   },
   pickerIOS: {
     flex: 1,
-    textAlign: 'center',
     marginTop: 10
   },
   pickerItem: {
