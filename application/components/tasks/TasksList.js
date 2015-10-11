@@ -61,7 +61,8 @@ var TasksList = React.createClass({
     let {items, date, total} = this.props;
     if (items[e].datesStarred[date] > 0) {
       items[e].datesStarred[date] -= 1;
-      this.props.changeTotal(items, total-1);
+      var diff = total > 0 ? 1 : 0
+      this.props.changeTotal(items, total-diff);
     }
   },
   createNewTask: function() {
