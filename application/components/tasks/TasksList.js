@@ -7,6 +7,7 @@ let Payout            = require('../rewards/Payout');
 let styles            = require('../styles');
 let _                 = require('underscore');
 let TaskPicker        = require('../taskPicker');
+let TaskItem          = require('./TaskItem');
 let {
   View,
   Text,
@@ -163,7 +164,6 @@ var TasksList = React.createClass({
       if (text.length == 23) { text += "..."; }
       let today = self.props.date;
       let todayStars = 0;
-      // console.log("THIS DATE", item.datesStarred[today]);
       if (item.datesStarred[today] != null) {
         todayStars = item.datesStarred[today];
       }
@@ -171,28 +171,16 @@ var TasksList = React.createClass({
       let boundDecreaseStar   =  self.decreaseStar.bind(null, idx);
       let boundAddAllStars    =  self.addAllStars.bind(this, idx);
       let starBackground      =  todayStars > 0 ? Colors.yellow : "white"
-      console.log("BOUNCE VALUE", self.state.bounceValue);
-      return  <View style={styles.rewardContainer} key={idx} ref={`item${idx}`}>
-                <View style={styles.starContainer}>
-                  <Icon
-                    name='fontawesome|star'
-                    size={30}
-                    style={styles.starFull}
-                    color={starBackground}/>
-                  <Text style={styles.starText}>{todayStars}</Text>
-                </View>
-                <TouchableHighlight onPress={boundDecreaseStar} style={styles.rewardIconButton} underlayColor={Colors.lightBlue}>
-                  <Icon name='fontawesome|minus-square' size={30} style={styles.smallRewardIcons} color={Colors.blue} />
-                </TouchableHighlight>
-                <TouchableHighlight onPress={boundAddStar} style={styles.rewardIconButton} underlayColor={Colors.lightBlue}>
-                  <Icon name='fontawesome|plus-square' size={30} style={styles.smallRewardIcons} color={Colors.blue} />
-                </TouchableHighlight>
-                <Text style={styles.reward}>{text}</Text>
-                <Text style={styles.rewardStars}>({item.stars} stars)</Text>
-                <TouchableHighlight onPress={boundAddAllStars} style={styles.rewardIconButton} underlayColor={Colors.lightBlue}>
-                  <Icon name='fontawesome|check-square-o' size={30} style={styles.smallRewardIcons} color={Colors.green}/>
-                </TouchableHighlight>
-              </View>;
+      return  <TaskItem
+                key={idx}
+                todayStars={todayStars}
+                addStar={boundAddStar}
+                decreaseStar={boundDecreaseStar}
+                addAllStars={boundAddAllStars}
+                starBackground={starBackground}
+                text={text}
+                stars={item.stars}
+                />
       });
       if (changes > 0) {
         console.log("NEEDS CHANGES", changes);

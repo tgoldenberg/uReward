@@ -2,6 +2,7 @@ const React = require('react-native');
 const { Icon, } = require('react-native-icons');
 let Payout = require('./Payout');
 let styles = require('../styles');
+let RewardItem = require('./RewardItem');
 let Colors = require('../colors');
 let { View, Text, StyleSheet, TextInput, TouchableHighlight, ScrollView, PickerIOS, Image, AsyncStorage } = React;
 let PickerItemIOS = PickerIOS.Item;
@@ -135,18 +136,15 @@ var RewardsList = React.createClass({
         <ScrollView style={styles.scrollView} contentInset={{bottom:0}} automaticallyAdjustContentInsets={false}>
           {this.props.rewards.map((reward, idx) => {
             var boundBuyReward = this.buyReward.bind(this, {id: idx, stars: reward.stars});
-            return <View style={styles.rewardContainer} key={idx} ref={`item${idx}`}>
-              <View style={styles.starContainer}>
-                <Icon name='fontawesome|star' size={40} style={styles.star} color={Colors.yellow}/>
-                <Text style={styles.starText}>{reward.stars}</Text>
-              </View>
-
-              <Text style={styles.reward}>{reward.name}</Text>
-              <Text style={styles.buy}>BUY</Text>
-              <TouchableHighlight onPress={boundBuyReward} underlayColor={Colors.lightBlue}>
-                <Icon name='fontawesome|check-square-o' size={30} style={styles.rewardIcons} color={Colors.green}/>
-              </TouchableHighlight>
-            </View>
+            return (
+              <RewardItem
+                stars={reward.stars}
+                name={reward.name}
+                buyReward={boundBuyReward}
+                total={this.props.total}
+                key={idx}
+                />
+            )
           })}
           {rewardCreateContent}
         </ScrollView>
