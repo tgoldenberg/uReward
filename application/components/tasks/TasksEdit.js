@@ -78,7 +78,11 @@ var TasksEdit = React.createClass({
             <Icon name='fontawesome|angle-right' size={40} style={styles.calendarSigns} color='black'/>
           </View>
         </View>
-        <ScrollView style={styles.scrollView} contentInset={{bottom:49}} automaticallyAdjustContentInsets={false}>
+        <ScrollView
+          style={styles.scrollView}
+          contentInset={{bottom:49}}
+          keyboardShouldPersistTaps={false}
+          automaticallyAdjustContentInsets={false}>
           <TouchableHighlight style={styles.editTaskContainer} underlayColor={Colors.lightBlue} onPress={this.props.toggleEdit}>
             <Text style={styles.editTaskText}>Done</Text>
           </TouchableHighlight>

@@ -54,7 +54,11 @@ var RewardsEdit = React.createClass({
             <Text style={{color: 'white', flex: 1, padding: 15, fontSize: 18 }}>Total Stars: {this.props.total}</Text>
           </View>
         </View>
-        <ScrollView style={styles.scrollView} contentInset={{bottom:49}} automaticallyAdjustContentInsets={false}>
+        <ScrollView
+          style={styles.scrollView}
+          contentInset={{bottom:49}}
+          keyboardShouldPersistTaps={false}
+          automaticallyAdjustContentInsets={false}>
           <TouchableHighlight style={styles.editTaskContainer} underlayColor={Colors.lightBlue} onPress={this.props.toggleEdit}>
             <Text style={styles.editTaskText}>Done</Text>
           </TouchableHighlight>

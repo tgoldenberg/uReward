@@ -133,7 +133,11 @@ var RewardsList = React.createClass({
             <Text style={{fontSize: 20, marginTop: 20, textAlign: 'center', flex: 8}}>Rewards</Text>
           </View>
         </View>
-        <ScrollView style={styles.scrollView} contentInset={{bottom:0}} automaticallyAdjustContentInsets={false}>
+        <ScrollView
+          style={styles.scrollView}
+          contentInset={{bottom:0}}
+          keyboardShouldPersistTaps={false}
+          automaticallyAdjustContentInsets={false}>
           {this.props.rewards.map((reward, idx) => {
             var boundBuyReward = this.buyReward.bind(this, {id: idx, stars: reward.stars});
             return (

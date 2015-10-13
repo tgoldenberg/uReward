@@ -234,7 +234,11 @@ var TasksList = React.createClass({
             </TouchableHighlight>
           </View>
         </View>
-        <ScrollView style={styles.scrollView} contentInset={{bottom:49}} automaticallyAdjustContentInsets={false}>
+        <ScrollView
+          style={styles.scrollView}
+          contentInset={{bottom:49}}
+          keyboardShouldPersistTaps={false}
+          automaticallyAdjustContentInsets={false}>
 
           {rewards}
           {taskCreateContent}
