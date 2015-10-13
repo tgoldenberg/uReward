@@ -337,24 +337,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				89E4C02F1BB8B5B700E680E3 /* FAKFontAwesome.h */,
-				89E4C0301BB8B5B700E680E3 /* FAKFontAwesome.m */,
-				89E4C0311BB8B5B700E680E3 /* FAKFoundationIcons.h */,
-				89E4C0321BB8B5B700E680E3 /* FAKFoundationIcons.m */,
-				89E4C0331BB8B5B700E680E3 /* FAKIcon.h */,
-				89E4C0341BB8B5B700E680E3 /* FAKIcon.m */,
-				89E4C0351BB8B5B700E680E3 /* FAKIonIcons.h */,
-				89E4C0361BB8B5B700E680E3 /* FAKIonIcons.m */,
-				89E4C0371BB8B5B700E680E3 /* FAKMaterial.h */,
-				89E4C0381BB8B5B700E680E3 /* FAKMaterial.m */,
-				89E4C0391BB8B5B700E680E3 /* FAKZocial.h */,
-				89E4C03A1BB8B5B700E680E3 /* FAKZocial.m */,
-				89E4C03B1BB8B5B700E680E3 /* FontAwesome.otf */,
-				89E4C03C1BB8B5B700E680E3 /* FontAwesomeKit.h */,
-				89E4C03D1BB8B5B700E680E3 /* foundation-icons.ttf */,
-				89E4C03E1BB8B5B700E680E3 /* ionicons.ttf */,
-				89E4C03F1BB8B5B700E680E3 /* Material-Design-Iconic-Font.ttf */,
-				89E4C0401BB8B5B700E680E3 /* zocial-regular-webfont.ttf */,
+				893F59861BCCCCC20047F515 /* Resources */,
 				13B07FAE1A68108700A75B9A /* uReward */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* uRewardTests */,
@@ -372,6 +355,31 @@
 				00E356EE1AD99517003FC87E /* uRewardTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		893F59861BCCCCC20047F515 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				89E4C0301BB8B5B700E680E3 /* FAKFontAwesome.m */,
+				89E4C0311BB8B5B700E680E3 /* FAKFoundationIcons.h */,
+				89E4C0321BB8B5B700E680E3 /* FAKFoundationIcons.m */,
+				89E4C0331BB8B5B700E680E3 /* FAKIcon.h */,
+				89E4C0341BB8B5B700E680E3 /* FAKIcon.m */,
+				89E4C0351BB8B5B700E680E3 /* FAKIonIcons.h */,
+				89E4C0361BB8B5B700E680E3 /* FAKIonIcons.m */,
+				89E4C0371BB8B5B700E680E3 /* FAKMaterial.h */,
+				89E4C0381BB8B5B700E680E3 /* FAKMaterial.m */,
+				89E4C0391BB8B5B700E680E3 /* FAKZocial.h */,
+				89E4C03A1BB8B5B700E680E3 /* FAKZocial.m */,
+				89E4C03B1BB8B5B700E680E3 /* FontAwesome.otf */,
+				89E4C03C1BB8B5B700E680E3 /* FontAwesomeKit.h */,
+				89E4C03D1BB8B5B700E680E3 /* foundation-icons.ttf */,
+				89E4C03E1BB8B5B700E680E3 /* ionicons.ttf */,
+				89E4C03F1BB8B5B700E680E3 /* Material-Design-Iconic-Font.ttf */,
+				89E4C0401BB8B5B700E680E3 /* zocial-regular-webfont.ttf */,
+				89E4C02F1BB8B5B700E680E3 /* FAKFontAwesome.h */,
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 		89E4C0291BB8B50F00E680E3 /* Products */ = {
