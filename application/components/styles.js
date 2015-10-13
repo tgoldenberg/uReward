@@ -127,7 +127,7 @@ var styles = StyleSheet.create({
     textAlign: 'left',
     color: '#222',
     flex: 3,
-    paddingLeft: 10,
+    paddingLeft: 7,
   },
   rewardStars: {
     fontSize: 12,
@@ -145,7 +145,7 @@ var styles = StyleSheet.create({
     flexDirection: 'row',
     height: 55,
     paddingRight: 8,
-    paddingLeft: 8,
+    paddingLeft: 4,
     justifyContent: 'center',
     alignItems: 'center',
     borderColor: 'black',

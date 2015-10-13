@@ -81,8 +81,8 @@ var TasksList = React.createClass({
     this.setState({
       createMode: false,
       inputText: "",
-      selectedNum: 1,
-      selectedPicker: "1 star"
+      selectedNum: 5,
+      selectedPicker: "5 stars"
     })
   },
   addAllStars: function(e) {
@@ -129,7 +129,21 @@ var TasksList = React.createClass({
                               <Text style={styles.editTaskText}>Create New Task</Text>
                             </TouchableHighlight>
                             <View style={styles.createTaskContainer}>
-                              <TextInput style={styles.taskInput} value={this.state.inputText} onChange={this.handleInputChange} placeholder={"Task Name"}/>
+                              <TextInput
+                                ref="taskName"
+                                onFocus={()=> {
+                                  setTimeout(() => {
+                                    let scrollResponder = this.refs.scrollView.getScrollResponder();
+                                    scrollResponder.scrollResponderScrollNativeHandleToKeyboard(
+                                      React.findNodeHandle(this.refs["taskName"]),
+                                      200, //additionalOffset
+                                      true
+                                    );
+                                  }, 50);
+                                }}
+                                style={styles.taskInput}
+                                value={this.state.inputText}
+                                onChange={this.handleInputChange} placeholder={"Task Name"}/>
                             </View>
                             <View style={styles.starsSelectContainer}>
                               <Text style={styles.selectStarText}># of Stars: {this.state.selectedNum}</Text>
@@ -239,6 +253,7 @@ var TasksList = React.createClass({
           </View>
         </View>
         <ScrollView
+          ref="scrollView"
           style={styles.scrollView}
           contentInset={{bottom:99}}
           keyboardShouldPersistTaps={false}

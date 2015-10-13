@@ -30,7 +30,7 @@ var RewardsEdit = React.createClass({
       console.log("PROPS", self.props);
       return  <View style={styles.rewardContainer} key={idx}>
                 <TouchableHighlight underlayColor="#d6d6d6" onPress={boundDelete}>
-                  <Icon name='fontawesome|times' size={30} style={styles.times} color={Colors.blue}/>
+                  <Icon name='fontawesome|times' size={30} style={styles.times} color={"#777"}/>
                 </TouchableHighlight>
                 <View style={styles.starContainer}>
                   <Icon name='fontawesome|star' size={40} style={styles.star} color={Colors.yellow}/>

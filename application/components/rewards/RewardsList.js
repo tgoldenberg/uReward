@@ -52,8 +52,8 @@ var RewardsList = React.createClass({
       this.setState({
         createMode: false,
         inputText: "",
-        selectedNum: 1,
-        selectedPicker: "1 star"
+        selectedNum: 5,
+        selectedPicker: "5 stars"
       })
     }
   },
@@ -83,11 +83,25 @@ var RewardsList = React.createClass({
                                 <Text style={styles.editTaskText}>Create New Reward</Text>
                               </TouchableHighlight>
                               <View style={styles.createTaskContainer}>
-                                <TextInput style={styles.taskInput} value={this.state.inputText} onChange={this.handleInputChange} placeholder={"Task Name"}/>
+                                <TextInput
+                                  ref="taskName"
+                                  onFocus={()=> {
+                                    setTimeout(() => {
+                                      let scrollResponder = this.refs.scrollView.getScrollResponder();
+                                      scrollResponder.scrollResponderScrollNativeHandleToKeyboard(
+                                        React.findNodeHandle(this.refs["taskName"]),
+                                        200, //additionalOffset
+                                        true
+                                      );
+                                    }, 50);
+                                  }}
+                                  style={styles.taskInput}
+                                  value={this.state.inputText}
+                                  onChange={this.handleInputChange} placeholder={"Task Name"}/>
                               </View>
                               <View style={styles.starsSelectContainer}>
                                 <Text style={styles.selectStarText}># of Stars: {this.state.selectedNum}</Text>
-                                <Icon name='fontawesome|star' size={40} style={styles.star} color={Colors.yellow}/>
+                                <Icon name='fontawesome|star' size={25} style={styles.star} color={Colors.yellow}/>
                               </View>
 
                               <View style={styles.pickerContainer}>
@@ -136,6 +150,7 @@ var RewardsList = React.createClass({
           </View>
         </View>
         <ScrollView
+          ref="scrollView"
           style={styles.scrollView}
           contentInset={{bottom:0}}
           keyboardShouldPersistTaps={false}
