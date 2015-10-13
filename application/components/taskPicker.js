@@ -98,7 +98,6 @@ let TaskPicker = [
   "97 stars",
   "98 stars",
   "99 stars",
-  "100 stars",
 ]
 
 module.exports = TaskPicker;

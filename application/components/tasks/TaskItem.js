@@ -50,13 +50,15 @@ class TaskItem extends React.Component{
         <Animated.View style={{
           flex: .8,
           flexDirection: 'row',
+          marginRight: 4,
+          marginLeft: 8,
           transform: [
             {scale: this.state.bounceValue}
           ]
         }}>
           <Icon
             name='fontawesome|star'
-            size={45}
+            size={32}
             style={styles.starFull}
             color={this.props.starBackground}/>
           <Text style={styles.starText}>{this.props.todayStars}</Text>
@@ -68,7 +70,7 @@ class TaskItem extends React.Component{
           }}
           style={styles.rewardIconButton}
           underlayColor={Colors.lightBlue}>
-            <Icon name='fontawesome|minus-square' size={30} style={styles.smallRewardIcons} color={Colors.blue} />
+            <Icon name='fontawesome|minus-square' size={25} style={styles.smallRewardIcons} color={Colors.blue} />
         </TouchableHighlight>
         <TouchableHighlight
           onPress={() => {
@@ -77,7 +79,7 @@ class TaskItem extends React.Component{
           }}
           style={styles.rewardIconButton}
           underlayColor={Colors.lightBlue}>
-            <Icon name='fontawesome|plus-square' size={30} style={styles.smallRewardIcons} color={Colors.blue} />
+            <Icon name='fontawesome|plus-square' size={25} style={styles.smallRewardIcons} color={Colors.blue} />
         </TouchableHighlight>
         <Text style={styles.reward}>{this.props.text}</Text>
         <Text style={styles.rewardStars}>({this.props.stars} stars)</Text>
@@ -89,7 +91,7 @@ class TaskItem extends React.Component{
           style={styles.rewardIconButton}
           underlayColor={Colors.lightBlue}>
           <Animated.View>
-            <Icon name='fontawesome|check-square-o' size={30} style={styles.smallRewardIcons} color={Colors.green}/>
+            <Icon name='fontawesome|check-square-o' size={25} style={styles.smallRewardIcons} color={Colors.green}/>
           </Animated.View>
         </TouchableHighlight>
       </View>

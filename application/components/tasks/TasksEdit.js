@@ -26,6 +26,7 @@ var TasksEdit = React.createClass({
 
   render: function() {
     var self = this;
+    let isToday = this.props.date == new Date().toLocaleDateString() ? "Today " : "";
     var items = _.compact(this.props.items);
     var today = new Date(this.props.date).toDateString();
     var rewards = items.map(function(reward, idx){
@@ -41,8 +42,8 @@ var TasksEdit = React.createClass({
                 <TouchableHighlight underlayColor="#d6d6d6" onPress={boundDelete}>
                   <Icon name='fontawesome|times' size={30} style={styles.times} color='#777'/>
                 </TouchableHighlight>
-                <View style={styles.starContainer}>
-                  <Icon name='fontawesome|star' size={40} style={styles.star} color={starBackground}/>
+                <View style={styles.editStarContainer}>
+                  <Icon name='fontawesome|star' size={30} style={styles.star} color={starBackground}/>
                   <Text style={styles.starText}>{reward.datesStarred[self.props.date]}</Text>
                 </View>
                 <Text style={styles.reward}>{text}</Text>
@@ -52,30 +53,40 @@ var TasksEdit = React.createClass({
       });
     return (
       <View>
-        <View style={{flexDirection: 'row', height: 100, marginTop: 60}}>
+        <View style={{flexDirection: 'row', height: 80, marginTop: 60}}>
           <View style={{backgroundColor: '#e6e6e6', flex: 0.5, flexDirection: 'row'}} >
             <Icon name='fontawesome|user' size={40} style={styles.facebook} color='black'/>
             <View style={{flexDirection: 'column', alignItems: 'stretch', flex: 1}}>
-              <Text style={{fontSize: 20, marginRight: 10, marginTop: 20, flex: 1, textAlign: 'center'}}>{this.props.username}</Text>
-              <View style={styles.payoutButton}>
-                <TouchableHighlight
-                  underlayColor={Colors.lightBlue}
-                  style={styles.payoutContainer}>
-                  <Text style={styles.payoutText}>Payout</Text>
-                </TouchableHighlight>
-              </View>
+              <Text style={{fontSize: 16, fontWeight: 'bold', marginRight: 2, marginTop: 10, flex: 1, textAlign: 'center'}}>
+                {this.props.username}
+              </Text>
+                <View style={styles.payoutButton}>
+                  <TouchableHighlight
+                    underlayColor={Colors.lightBlue}
+                    style={styles.payoutContainer}>
+                    <Text style={styles.payoutText}>Payout</Text>
+                  </TouchableHighlight>
+                </View>
             </View>
           </View>
           <View style={{backgroundColor: '#888', flex: 0.5}} >
-            <Text style={{color: 'white', flex: 1, padding: 15, fontSize: 18, backgroundColor: '#999' }}>Stars This Week: {this.props.starsThisWeek}</Text>
-            <Text style={{color: 'white', flex: 1, padding: 15, fontSize: 18 }}>Total Stars: {this.props.total}</Text>
+            <Text style={{color: 'white', flex: 2, padding: 5, paddingTop: 12, fontSize: 14, backgroundColor: '#999' }}>
+              Stars This Week: {this.props.starsThisWeek}
+            </Text>
+            <Text style={{color: 'white', flex: 2, padding: 5, paddingTop: 12, fontSize: 14 }}>
+              Total Stars: {this.props.total}
+            </Text>
           </View>
         </View>
-        <View style={{flexDirection: 'row', height: 70}}>
+        <View style={{flexDirection: 'row', height: 45}}>
           <View style={{backgroundColor: '#f7f7f7', flex: 1, flexDirection: 'row'}} >
-            <Icon name='fontawesome|angle-left' size={40} style={styles.calendarSigns} color='black'/>
-            <Text style={{fontSize: 20, marginTop: 20, textAlign: 'center', flex: 8}}>{today}</Text>
-            <Icon name='fontawesome|angle-right' size={40} style={styles.calendarSigns} color='black'/>
+            <TouchableHighlight underlayColor="#CCC" onPress={this.prevDate}>
+              <Icon name='fontawesome|angle-left' size={40} style={styles.calendarSigns} color='#777'/>
+            </TouchableHighlight>
+            <Text style={{fontSize: 16, marginTop: 12, textAlign: 'center', flex: 8, color: "#333"}}>{isToday} {new Date(this.props.date).toDateString()}</Text>
+            <TouchableHighlight underlayColor="#CCC" onPress={this.nextDate}>
+              <Icon name='fontawesome|angle-right' size={40} style={styles.calendarSigns} color='#777'/>
+            </TouchableHighlight>
           </View>
         </View>
         <ScrollView

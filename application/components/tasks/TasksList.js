@@ -27,8 +27,8 @@ var TasksList = React.createClass({
     return {
       inputText: "",
       createMode: false,
-      selectedNum: 1,
-      selectedPicker: "1 star",
+      selectedNum: 5,
+      selectedPicker: "5 stars",
     };
   },
 
@@ -120,13 +120,7 @@ var TasksList = React.createClass({
     let isToday = this.props.date == new Date().toLocaleDateString() ? "Today " : "";
     let taskCreateContent;
     if (this.state.createMode) {
-      taskCreateContent = <View style={styles.pickerMainContainer}><View style={styles.createTaskContainer}>
-                            <TextInput style={styles.taskInput} value={this.state.inputText} onChange={this.handleInputChange} placeholder={"Task Name"}/>
-                          </View>
-                          <View style={styles.starsSelectContainer}>
-                            <Text style={styles.selectStarText}># of Stars: {this.state.selectedNum}</Text>
-                            <Icon name='fontawesome|star' size={40} style={styles.star} color={Colors.yellow}/>
-                          </View>
+      taskCreateContent = <View style={styles.pickerMainContainer}>
                             <TouchableHighlight
                               onPress={this.createNewTask}
                               underlayColor={Colors.lightBlue}
@@ -134,13 +128,23 @@ var TasksList = React.createClass({
                               >
                               <Text style={styles.editTaskText}>Create New Task</Text>
                             </TouchableHighlight>
-                          <View style={styles.pickerContainer}>
-                            <PickerIOS style={styles.pickerIOS} selectedValue={this.state.selectedPicker} onChange={this.selectNum}>
-                              {TaskPicker.map((num) => (
-                                <PickerItemIOS style={styles.pickerItem} color={"white"} key={num} value={num} label={num.toString()}/>
-                              ))}
-                            </PickerIOS>
-                          </View></View>
+                            <View style={styles.createTaskContainer}>
+                              <TextInput style={styles.taskInput} value={this.state.inputText} onChange={this.handleInputChange} placeholder={"Task Name"}/>
+                            </View>
+                            <View style={styles.starsSelectContainer}>
+                              <Text style={styles.selectStarText}># of Stars: {this.state.selectedNum}</Text>
+                              <Icon name='fontawesome|star' size={25} style={styles.star} color={Colors.yellow}/>
+                            </View>
+
+                            <View style={styles.pickerContainer}>
+                              <PickerIOS style={styles.pickerIOS} selectedValue={this.state.selectedPicker} onChange={this.selectNum}>
+                                {TaskPicker.map((num) => (
+                                  <PickerItemIOS style={styles.pickerItem} color={"white"} key={num} value={num} label={num.toString()}/>
+                                ))}
+                              </PickerIOS>
+                            </View>
+
+                          </View>
     } else {
       taskCreateContent = <View style={styles.editButtonsContainer}>
                             <TouchableHighlight
@@ -196,12 +200,12 @@ var TasksList = React.createClass({
         buttonText = "Cancel"
       }
     return (
-      <View>
-        <View style={{flexDirection: 'row', height: 100, marginTop: 60}}>
+      <View style={{flex: 1}}>
+        <View style={{flexDirection: 'row', height: 80, marginTop: 60}}>
           <View style={{backgroundColor: '#e6e6e6', flex: 0.5, flexDirection: 'row'}} >
             <Icon name='fontawesome|user' size={40} style={styles.facebook} color='black'/>
             <View style={{flexDirection: 'column', alignItems: 'stretch', flex: 1}}>
-              <Text style={{fontSize: 20, marginRight: 10, marginTop: 20, flex: 1, textAlign: 'center'}}>
+              <Text style={{fontSize: 16, fontWeight: 'bold', marginRight: 2, marginTop: 10, flex: 1, textAlign: 'center'}}>
                 {this.props.username}
               </Text>
                 <View style={styles.payoutButton}>
@@ -215,34 +219,33 @@ var TasksList = React.createClass({
             </View>
           </View>
           <View style={{backgroundColor: '#888', flex: 0.5}} >
-            <Text style={{color: 'white', flex: 2, padding: 15, fontSize: 18, backgroundColor: '#999' }}>
+            <Text style={{color: 'white', flex: 2, padding: 5, paddingTop: 12, fontSize: 14, backgroundColor: '#999' }}>
               Stars This Week: {this.props.starsThisWeek}
             </Text>
-            <Text style={{color: 'white', flex: 2, padding: 15, fontSize: 18 }}>
+            <Text style={{color: 'white', flex: 2, padding: 5, paddingTop: 12, fontSize: 14 }}>
               Total Stars: {this.props.total}
             </Text>
           </View>
         </View>
-        <View style={{flexDirection: 'row', height: 70}}>
+        <View style={{flexDirection: 'row', height: 45}}>
           <View style={{backgroundColor: '#f7f7f7', flex: 1, flexDirection: 'row'}} >
             <TouchableHighlight underlayColor="#CCC" onPress={this.prevDate}>
-              <Icon name='fontawesome|angle-left' size={40} style={styles.calendarSigns} color='black'/>
+              <Icon name='fontawesome|angle-left' size={40} style={styles.calendarSigns} color='#777'/>
             </TouchableHighlight>
-            <Text style={{fontSize: 20, marginTop: 20, textAlign: 'center', flex: 8}}>{isToday} {new Date(this.props.date).toDateString()}</Text>
+            <Text style={{fontSize: 16, marginTop: 12, textAlign: 'center', flex: 8, color: "#333"}}>{isToday} {new Date(this.props.date).toDateString()}</Text>
             <TouchableHighlight underlayColor="#CCC" onPress={this.nextDate}>
-              <Icon name='fontawesome|angle-right' size={40} style={styles.calendarSigns} color='black'/>
+              <Icon name='fontawesome|angle-right' size={40} style={styles.calendarSigns} color='#777'/>
             </TouchableHighlight>
           </View>
         </View>
         <ScrollView
           style={styles.scrollView}
-          contentInset={{bottom:49}}
+          contentInset={{bottom:99}}
           keyboardShouldPersistTaps={false}
           automaticallyAdjustContentInsets={false}>
-
           {rewards}
-          {taskCreateContent}
 
+        {taskCreateContent}
         </ScrollView>
       </View>
     )

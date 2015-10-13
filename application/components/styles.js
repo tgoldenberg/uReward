@@ -9,7 +9,10 @@ var styles = StyleSheet.create({
     marginTop: 65,
     flexDirection: 'column',
     justifyContent: 'center',
-    backgroundColor: Colors.mediumBlue
+
+    backgroundColor: Colors.mediumBlue,
+    paddingLeft: 5,
+    paddingRight: 5,
   },
   mainTitle: {
     fontSize: 25,
@@ -17,7 +20,8 @@ var styles = StyleSheet.create({
     color: '#fff',
     marginBottom: 10,
     fontWeight: 'bold',
-    letterSpacing: 1
+    letterSpacing: 1,
+    marginTop: 30,
   },
   searchButtonText: {
     fontSize: 25,
@@ -37,16 +41,21 @@ var styles = StyleSheet.create({
     backgroundColor: Colors.blue,
     borderRadius: 5,
     marginBottom: 10,
-    marginRight: 15,
+    marginRight: 10,
     marginLeft: 5,
-    height: 40
+    height: 35,
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
   },
   payoutText: {
-    fontSize: 18,
-    padding: 8,
+    fontSize: 14,
+    fontWeight: 'bold',
     textAlign: 'center',
-    marginLeft: 5,
     color: 'white',
+    marginLeft: 10,
+    marginTop: 6,
     backgroundColor: 'transparent'
   },
   mainContainer: {
@@ -54,7 +63,7 @@ var styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     backgroundColor: '#f7f7f7',
-    padding: 20
+    padding: 10
   },
   row: {
     flex: 1,
@@ -86,11 +95,11 @@ var styles = StyleSheet.create({
     backgroundColor: Colors.lightBlue
   },
   taskInput: {
-    height: 50,
+    height: 40,
     padding: 4,
     flex: 3,
     marginRight: 4,
-    fontSize: 23,
+    fontSize: 18,
     borderWidth: 1,
     borderColor: 'white',
     borderRadius: 8,
@@ -114,29 +123,31 @@ var styles = StyleSheet.create({
     justifyContent: 'center'
   },
   reward: {
-    fontSize: 18,
+    fontSize: 15,
     textAlign: 'left',
-    color: 'black',
+    color: '#222',
     flex: 3,
-    padding: 5
+    paddingLeft: 10,
   },
   rewardStars: {
     fontSize: 12,
-    marginTop: 10,
-    color: 'black',
-    flex: 1.2
+    color: '#333',
+    flex: 1.5
   },
   buy: {
     fontSize: 18,
     color: 'black',
     flex: 1.2,
-    marginTop: 8,
     fontWeight: 'bold'
   },
   rewardContainer: {
     flex: 1,
     flexDirection: 'row',
-    padding: 10,
+    height: 55,
+    paddingRight: 8,
+    paddingLeft: 8,
+    justifyContent: 'center',
+    alignItems: 'center',
     borderColor: 'black',
     marginTop: 4,
     borderRadius: 3,
@@ -159,9 +170,11 @@ var styles = StyleSheet.create({
     marginLeft: 5
   },
   facebook: {
-    width: 70,
-    height: 80,
-    margin: 10,
+    width: 55,
+    height: 60,
+    margin: 5,
+    marginTop: 12,
+    marginLeft: 5,
     backgroundColor: Colors.regularBlue,
     borderRadius: 2
   },
@@ -169,18 +182,18 @@ var styles = StyleSheet.create({
     width: 50,
     height: 50,
     flex: 1,
-    marginTop: 7
   },
   rewardIcons: {
-    width: 40,
-    height: 40,
-    flex: 1,
-    fontSize: 10
+    width: 25,
+    height: 25,
+    flex: .7,
+    fontSize: 10,
+    marginTop: 3,
   },
   smallRewardIcons: {
     flex: .7,
-    width: 30,
-    height: 30,
+    width: 25,
+    height: 25,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: 'transparent'
@@ -188,36 +201,41 @@ var styles = StyleSheet.create({
   rewardIconButton: {
     backgroundColor: 'transparent',
     marginTop: 4,
-    height: 30,
-    width: 30,
+    height: 25,
+    width: 25,
   },
   times: {
     flex: .7,
     width: 30,
     height: 30,
     fontSize: 15,
-    marginTop: 6
   },
   starFull: {
-    width: 40,
-    height: 40,
+    width: 30,
+    height: 30,
     color: 'yellow'
   },
   star: {
-    width: 40,
-    height: 40,
+    width: 30,
+    height: 30,
     backgroundColor: 'transparent'
   },
   starContainer: {
     flex: 1,
     flexDirection: 'row'
   },
+  editStarContainer: {
+    flex: 1,
+    flexDirection: 'row',
+  },
   starText: {
     position: 'absolute',
-    left: 10,
-    top: 12,
-    width: 20,
+    left: -0.5,
+    top: 7,
+    width: 30,
     textAlign: 'center',
+    fontSize: 12,
+    color: "#333",
     backgroundColor: 'transparent'
   },
   createTaskContainer: {
@@ -234,20 +252,17 @@ var styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'stretch',
-    padding: 20
+    padding: 5,
   },
   pickerContainer: {
     flexDirection: 'row',
     alignItems: 'stretch',
-    paddingLeft: 10,
   },
   pickerIOS: {
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
-    marginTop: 10,
     alignItems: 'stretch',
-    marginLeft: 10,
   },
   rewardsPickerIOS: {
     flex: 1,
@@ -255,7 +270,6 @@ var styles = StyleSheet.create({
     justifyContent: 'center',
     marginTop: 10,
     alignItems: 'stretch',
-    marginLeft: 30,
   },
   pickerItem: {
 
@@ -275,12 +289,13 @@ var styles = StyleSheet.create({
   },
   editTaskContainer: {
     flex: 1,
+    height: 50,
+    marginTop: 4,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     padding: 10,
     borderColor: 'black',
-    marginTop: 4,
     borderWidth: 1,
     borderColor: Colors.lightBlue,
     borderRadius: 8,
@@ -292,12 +307,13 @@ var styles = StyleSheet.create({
     padding: 10
   },
   editTaskText: {
-    fontSize: 20,
+    fontSize: 18,
     color: 'white',
-    padding: 10
+    padding: 10,
+    fontWeight: 'bold',
   },
   editButtonsContainer: {
-    marginTop: 5,
+    marginTop: 3,
   },
   editButton: {
     alignSelf: 'stretch',

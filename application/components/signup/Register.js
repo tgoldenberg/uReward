@@ -3,7 +3,14 @@ const React         = require('react-native');
 let Colors          = require('../colors');
 let Dashboard       = require('../Dashboard');
 let styles          = require('../styles');
-let { AsyncStorage, Text, TextInput, TouchableHighlight, View } = React;
+let {
+  AsyncStorage,
+  Text,
+  TextInput,
+  TouchableHighlight,
+  View,
+  ScrollView,
+} = React;
 
 class Register extends React.Component{
   constructor(props) {
@@ -41,6 +48,11 @@ class Register extends React.Component{
   render() {
     return (
       <View style={styles.registerContainer}>
+      <ScrollView
+        contentInset={{bottom:49}}
+        keyboardShouldPersistTaps={false}
+        automaticallyAdjustContentInsets={false}
+        style={styles.scrollView}>
         <Text style={styles.mainTitle}>rewardU</Text>
         <TextInput
           style={styles.searchInput}
@@ -55,6 +67,7 @@ class Register extends React.Component{
           <Text style={styles.searchButtonText}> SIGNUP </Text>
         </TouchableHighlight>
         <Text style={styles.buttonText}>Username: {this.state.storedName}</Text>
+      </ScrollView>
       </View>
     );
   }

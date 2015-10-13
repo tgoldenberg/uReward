@@ -48,14 +48,14 @@ class RewardItem extends React.Component{
       <View style={styles.rewardContainer}>
         <Animated.View
           style={{
-            flex: 0.8,
+            flex: 1,
             flexDirection: 'row',
             transform: [
               {scale: this.state.bounceValue}
             ]
           }}
           >
-          <Icon name='fontawesome|star' size={40} style={styles.star} color={Colors.yellow}/>
+          <Icon name='fontawesome|star' size={30} style={styles.star} color={Colors.yellow}/>
           <Text style={styles.starText}>{this.props.stars}</Text>
         </Animated.View>
 
@@ -69,7 +69,7 @@ class RewardItem extends React.Component{
             }
           }}
           underlayColor={Colors.lightBlue}>
-          <Icon name='fontawesome|check-square-o' size={30} style={styles.rewardIcons} color={Colors.green}/>
+          <Icon name='fontawesome|check-square-o' size={25} style={styles.rewardIcons} color={Colors.green}/>
         </TouchableHighlight>
       </View>
     )
