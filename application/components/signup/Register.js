@@ -21,14 +21,20 @@ class Register extends React.Component{
     this._loadInitialState();
   }
   async _loadInitialState() {
-    let username = await AsyncStorage.getItem(USERNAME_KEY);
-    if (username != null ) {
-      this.setState({username: username, storedName: username});
-      this.props.navigator.push({
-        title: 'Dashboard',
-        component: Dashboard,
-        passProps: {username: username}
-      });
+    try {
+      let username = await AsyncStorage.getItem(USERNAME_KEY);
+      if (username != null ) {
+        this.setState({username: username, storedName: username});
+        this.props.navigator.push({
+          title: 'Dashboard',
+          component: Dashboard,
+          passProps: {username: username}
+        });
+      } else {
+        console.log('must select a username');
+      }
+    } catch (error) {
+      console.log('AsyncStorage error: ' + error.message);
     }
   }
   handleChange(e) {
