@@ -1,6 +1,7 @@
 const React           = require('react-native');
 const Colors          = require('../colors');
-let { Icon, }         = require('react-native-icons');
+let Icon              = require('react-native-vector-icons/MaterialIcons');
+let FAIcon            = require('react-native-vector-icons/FontAwesome');
 let styles            = require('../styles');
 let {
   View,
@@ -55,7 +56,7 @@ class RewardItem extends React.Component{
             ]
           }}
           >
-          <Icon name='fontawesome|star' size={30} style={styles.star} color={Colors.yellow}/>
+          <FAIcon name='star' size={30} style={styles.star} color={Colors.yellow}/>
           <Text style={styles.starText}>{this.props.stars}</Text>
         </Animated.View>
 
@@ -69,7 +70,7 @@ class RewardItem extends React.Component{
             }
           }}
           underlayColor={Colors.lightBlue}>
-          <Icon name='fontawesome|check-square-o' size={25} style={styles.rewardIcons} color={Colors.green}/>
+          <FAIcon name='check-square-o' size={25} color={Colors.green}/>
         </TouchableHighlight>
       </View>
     )

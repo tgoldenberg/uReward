@@ -1,6 +1,6 @@
 var _ = require('underscore');
 var React = require('react-native');
-var { Icon, } = require('react-native-icons');
+let Icon = require('react-native-vector-icons/MaterialIcons');
 var styles = require('../styles');
 var _ = require('underscore');
 let Colors = require('../colors');
@@ -42,16 +42,28 @@ var RewardsEdit = React.createClass({
       });
     return (
       <View>
-        <View style={{flexDirection: 'row', height: 100, marginTop: 60}}>
+        <View style={{flexDirection: 'row', height: 80, marginTop: 60}}>
           <View style={{backgroundColor: '#e6e6e6', flex: 0.5, flexDirection: 'row'}} >
-            <Icon name='fontawesome|user' size={40} style={styles.facebook} color='black'/>
+            <Icon name='account-box' size={80} color={Colors.regularBlue}/>
             <View style={{flexDirection: 'column', alignItems: 'stretch', flex: 1}}>
-              <Text style={{fontSize: 20, marginRight: 10, marginTop: 20, flex: 1, textAlign: 'center'}}>{this.props.username}</Text>
+              <Text style={{fontSize: 16, fontWeight: 'bold', marginRight: 2, marginTop: 10, flex: 1, textAlign: 'center'}}>
+                {this.props.username}
+              </Text>
+                
             </View>
           </View>
           <View style={{backgroundColor: '#888', flex: 0.5}} >
-            <Text style={{color: 'white', flex: 1, padding: 15, fontSize: 18, backgroundColor: '#999' }}>Stars This Week: {this.props.starsThisWeek}</Text>
-            <Text style={{color: 'white', flex: 1, padding: 15, fontSize: 18 }}>Total Stars: {this.props.total}</Text>
+            <Text style={{color: 'white', flex: 2, padding: 5, paddingTop: 12, fontSize: 14, backgroundColor: '#999' }}>
+              Stars This Week: {this.props.starsThisWeek}
+            </Text>
+            <Text style={{color: 'white', flex: 2, padding: 5, paddingTop: 12, fontSize: 14 }}>
+              Total Stars: {this.props.total}
+            </Text>
+          </View>
+        </View>
+        <View style={{flexDirection: 'row', height: 45}}>
+          <View style={{backgroundColor: '#f7f7f7', flex: 1, flexDirection: 'row'}} >
+            <Text style={{fontSize: 16, marginTop: 10, color: "#333", textAlign: 'center', flex: 8}}>Rewards</Text>
           </View>
         </View>
         <ScrollView

@@ -1,6 +1,7 @@
 const _               = require('underscore');
 const React           = require('react-native');
-let { Icon, }         = require('react-native-icons');
+let Icon = require('react-native-vector-icons/MaterialIcons');
+let FAIcon = require('react-native-vector-icons/FontAwesome');
 let styles            = require('../styles');
 let Colors            = require('../colors');
 
@@ -40,22 +41,22 @@ var TasksEdit = React.createClass({
       // console.log("PROPS", self.props);
       return  <View style={styles.rewardContainer} key={idx}>
                 <TouchableHighlight underlayColor="#d6d6d6" onPress={boundDelete}>
-                  <Icon name='fontawesome|times' size={30} style={styles.times} color='#777'/>
+                  <FAIcon name='times' size={30} color='#777'/>
                 </TouchableHighlight>
                 <View style={styles.editStarContainer}>
-                  <Icon name='fontawesome|star' size={30} style={styles.star} color={starBackground}/>
+                  <FAIcon name='star' size={30} style={styles.star} color={starBackground}/>
                   <Text style={styles.starText}>{reward.datesStarred[self.props.date]}</Text>
                 </View>
                 <Text style={styles.reward}>{text}</Text>
                 <Text style={styles.rewardStars}>({reward.stars} stars)</Text>
-                <Icon name='fontawesome|bars' size={30} style={styles.rewardIcons} color='#6A85B1'/>
+                <FAIcon name='bars' size={30} color='#6A85B1'/>
               </View>;
       });
     return (
       <View>
         <View style={{flexDirection: 'row', height: 80, marginTop: 60}}>
           <View style={{backgroundColor: '#e6e6e6', flex: 0.5, flexDirection: 'row'}} >
-            <Icon name='fontawesome|user' size={40} style={styles.facebook} color='black'/>
+            <Icon name='account-box' size={80} color={Colors.regularBlue}/>
             <View style={{flexDirection: 'column', alignItems: 'stretch', flex: 1}}>
               <Text style={{fontSize: 16, fontWeight: 'bold', marginRight: 2, marginTop: 10, flex: 1, textAlign: 'center'}}>
                 {this.props.username}
@@ -81,11 +82,11 @@ var TasksEdit = React.createClass({
         <View style={{flexDirection: 'row', height: 45}}>
           <View style={{backgroundColor: '#f7f7f7', flex: 1, flexDirection: 'row'}} >
             <TouchableHighlight underlayColor="#CCC" onPress={this.prevDate}>
-              <Icon name='fontawesome|angle-left' size={40} style={styles.calendarSigns} color='#777'/>
+              <Icon name='chevron-left' size={40} style={styles.calendarSigns} color='#777'/>
             </TouchableHighlight>
             <Text style={{fontSize: 16, marginTop: 12, textAlign: 'center', flex: 8, color: "#333"}}>{isToday} {new Date(this.props.date).toDateString()}</Text>
             <TouchableHighlight underlayColor="#CCC" onPress={this.nextDate}>
-              <Icon name='fontawesome|angle-right' size={40} style={styles.calendarSigns} color='#777'/>
+              <Icon name='chevron-right' size={40} style={styles.calendarSigns} color='#777'/>
             </TouchableHighlight>
           </View>
         </View>

@@ -1,5 +1,6 @@
 const React = require('react-native');
-const { Icon, } = require('react-native-icons');
+let Icon = require('react-native-vector-icons/MaterialIcons');
+let FAIcon = require('react-native-vector-icons/FontAwesome');
 let Payout = require('./Payout');
 let styles = require('../styles');
 let RewardItem = require('./RewardItem');
@@ -101,7 +102,7 @@ var RewardsList = React.createClass({
                               </View>
                               <View style={styles.starsSelectContainer}>
                                 <Text style={styles.selectStarText}># of Stars: {this.state.selectedNum}</Text>
-                                <Icon name='fontawesome|star' size={25} style={styles.star} color={Colors.yellow}/>
+                                <FAIcon name='star' size={25} style={styles.star} color={Colors.yellow}/>
                               </View>
 
                               <View style={styles.pickerContainer}>
@@ -127,7 +128,7 @@ var RewardsList = React.createClass({
       <View>
         <View style={{flexDirection: 'row', height: 80, marginTop: 60}}>
           <View style={{backgroundColor: '#e6e6e6', flex: 0.5, flexDirection: 'row'}} >
-            <Icon name='fontawesome|user' size={40} style={styles.facebook} color='black'/>
+            <Icon name='account-box' size={80} color={Colors.regularBlue}/>
             <View style={{flexDirection: 'column', alignItems: 'stretch', flex: 1}}>
               <Text style={{fontSize: 16, fontWeight: 'bold', marginRight: 2, marginTop: 10, flex: 1, textAlign: 'center'}}>
                 {this.props.username}

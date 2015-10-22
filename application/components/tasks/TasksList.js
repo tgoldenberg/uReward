@@ -1,7 +1,8 @@
 const ITEMS_KEY       = '@uReward:items';
 const React           = require('react-native');
 const Colors          = require('../colors');
-let { Icon, }         = require('react-native-icons');
+let Icon = require('react-native-vector-icons/MaterialIcons');
+let FAIcon = require('react-native-vector-icons/FontAwesome');
 let TasksEdit         = require('./TasksEdit');
 let Payout            = require('../rewards/Payout');
 let styles            = require('../styles');
@@ -147,7 +148,7 @@ var TasksList = React.createClass({
                             </View>
                             <View style={styles.starsSelectContainer}>
                               <Text style={styles.selectStarText}># of Stars: {this.state.selectedNum}</Text>
-                              <Icon name='fontawesome|star' size={25} style={styles.star} color={Colors.yellow}/>
+                              <FAIcon name='star' size={25} style={styles.star} color={Colors.yellow}/>
                             </View>
 
                             <View style={styles.pickerContainer}>
@@ -217,7 +218,7 @@ var TasksList = React.createClass({
       <View style={{flex: 1}}>
         <View style={{flexDirection: 'row', height: 80, marginTop: 60}}>
           <View style={{backgroundColor: '#e6e6e6', flex: 0.5, flexDirection: 'row'}} >
-            <Icon name='fontawesome|user' size={40} style={styles.facebook} color='black'/>
+            <Icon name='account-box' size={80} color={Colors.regularBlue}/>
             <View style={{flexDirection: 'column', alignItems: 'stretch', flex: 1}}>
               <Text style={{fontSize: 16, fontWeight: 'bold', marginRight: 2, marginTop: 10, flex: 1, textAlign: 'center'}}>
                 {this.props.username}
@@ -244,11 +245,11 @@ var TasksList = React.createClass({
         <View style={{flexDirection: 'row', height: 45}}>
           <View style={{backgroundColor: '#f7f7f7', flex: 1, flexDirection: 'row'}} >
             <TouchableHighlight underlayColor="#CCC" onPress={this.prevDate}>
-              <Icon name='fontawesome|angle-left' size={40} style={styles.calendarSigns} color='#777'/>
+              <Icon name='chevron-left' size={40} style={styles.calendarSigns} color='#777'/>
             </TouchableHighlight>
             <Text style={{fontSize: 16, marginTop: 12, textAlign: 'center', flex: 8, color: "#333"}}>{isToday} {new Date(this.props.date).toDateString()}</Text>
             <TouchableHighlight underlayColor="#CCC" onPress={this.nextDate}>
-              <Icon name='fontawesome|angle-right' size={40} style={styles.calendarSigns} color='#777'/>
+              <Icon name='chevron-right' size={40} style={styles.calendarSigns} color='#777'/>
             </TouchableHighlight>
           </View>
         </View>

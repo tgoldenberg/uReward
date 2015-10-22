@@ -1,7 +1,7 @@
 const ITEMS_KEY   = '@uReward:items';
 const TOTAL       = '@uReward:total';
 const React       = require('react-native');
-let { Icon, }     = require('react-native-icons');
+let Icon = require('react-native-vector-icons/MaterialIcons');
 let TasksList     = require('./tasks/TasksList');
 let TasksEdit     = require('./tasks/TasksEdit');
 let Payout        = require('./rewards/Payout');

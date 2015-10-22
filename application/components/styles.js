@@ -171,11 +171,10 @@ var styles = StyleSheet.create({
   },
   facebook: {
     width: 55,
-    height: 60,
-    margin: 5,
+    height: 55,
     marginTop: 12,
     marginLeft: 5,
-    backgroundColor: Colors.regularBlue,
+    backgroundColor: 'white',
     borderRadius: 2
   },
   calendarSigns: {

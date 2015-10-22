@@ -1,6 +1,7 @@
 const React           = require('react-native');
 const Colors          = require('../colors');
-let { Icon, }         = require('react-native-icons');
+let FAIcon = require('react-native-vector-icons/FontAwesome');
+let MAIcon = require('react-native-vector-icons/MaterialIcons');
 let styles            = require('../styles');
 let {
   View,
@@ -56,8 +57,8 @@ class TaskItem extends React.Component{
             {scale: this.state.bounceValue}
           ]
         }}>
-          <Icon
-            name='fontawesome|star'
+          <FAIcon
+            name='star'
             size={32}
             style={styles.starFull}
             color={this.props.starBackground}/>
@@ -70,7 +71,7 @@ class TaskItem extends React.Component{
           }}
           style={styles.rewardIconButton}
           underlayColor={Colors.lightBlue}>
-            <Icon name='fontawesome|minus-square' size={25} style={styles.smallRewardIcons} color={Colors.blue} />
+            <FAIcon name='minus-square' size={25} style={styles.smallRewardIcons} color={Colors.blue} />
         </TouchableHighlight>
         <TouchableHighlight
           onPress={() => {
@@ -79,7 +80,7 @@ class TaskItem extends React.Component{
           }}
           style={styles.rewardIconButton}
           underlayColor={Colors.lightBlue}>
-            <Icon name='fontawesome|plus-square' size={25} style={styles.smallRewardIcons} color={Colors.blue} />
+            <FAIcon name='plus-square' size={25} style={styles.smallRewardIcons} color={Colors.blue} />
         </TouchableHighlight>
         <Text style={styles.reward}>{this.props.text}</Text>
         <Text style={styles.rewardStars}>({this.props.stars} stars)</Text>
@@ -91,7 +92,7 @@ class TaskItem extends React.Component{
           style={styles.rewardIconButton}
           underlayColor={Colors.lightBlue}>
           <Animated.View>
-            <Icon name='fontawesome|check-square-o' size={25} style={styles.smallRewardIcons} color={Colors.green}/>
+            <FAIcon name='check-square-o' size={25} style={styles.smallRewardIcons} color={Colors.green}/>
           </Animated.View>
         </TouchableHighlight>
       </View>
